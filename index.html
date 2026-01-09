@@ -39,16 +39,19 @@
       -webkit-text-size-adjust: 100%;
       touch-action: manipulation;
     }
+    :root { --app-height: 100vh; }
 
     /* Escenario centrado (usa altura real calculada por JS para móviles) */
     .stage{
-      width: 100vw;
-      height: var(--app-height);
-      display: grid;
-      place-items: center;
-      position: relative;
-      padding: calc(12px + var(--safe-top)) calc(12px + var(--safe-right)) calc(70px + var(--safe-bottom)) calc(12px + var(--safe-left));
-    }
+    width: 100vw;
+    height: var(--app-height);
+    display: grid;
+    place-items: center;
+    position: relative;
+    padding: 12px;
+  }
+
+
 
     /* Contenedor BASE 1280x720. Se escala por JS.
        (Esto evita el “doble escalado” que suele romper en móvil y hace que no se vea nada) */
@@ -2464,23 +2467,46 @@
       return window.matchMedia('(max-width: 900px)').matches || window.matchMedia('(pointer: coarse)').matches;
     }
 
-    function fitToScreen(){
-      // Escala SIEMPRE desde base 1280x720 para que funcione igual en PC y móvil
-      const vv = window.visualViewport;
-      const w = vv ? vv.width : window.innerWidth;
-      const h = vv ? vv.height : window.innerHeight;
+    function getViewportSize() {
+  // En WhatsApp/iOS, visualViewport puede llegar en 0 al inicio
+  const vv = window.visualViewport;
+  const w1 = (vv && vv.width) ? vv.width : 0;
+  const h1 = (vv && vv.height) ? vv.height : 0;
 
-      // Reservas para controles + margen
-      const safeH = h - 16;
-      const safeW = w - 16;
+  const w2 = document.documentElement.clientWidth || window.innerWidth || 0;
+  const h2 = document.documentElement.clientHeight || window.innerHeight || 0;
 
-      // Si estás en móvil, normalmente conviene un pelín más grande
-      const boost = (mode === 'mobile') ? 1.00 : 0.98;
+  return {
+    w: Math.max(w1, w2),
+    h: Math.max(h1, h2),
+  };
+}
 
-      const scale = Math.min(safeW / 1280, safeH / 720) * boost;
+function setAppHeightVar() {
+  const { h } = getViewportSize();
+  if (h) document.documentElement.style.setProperty('--app-height', `${h}px`);
+}
 
-      presentationContainer.style.transform = `scale(${scale})`;
-    }
+function fitToScreen() {
+  const { w, h } = getViewportSize();
+
+  // Evita que la escala quede en 0 / NaN y desaparezca todo
+  if (!w || !h) {
+    presentationContainer.style.transform = 'scale(1)';
+    return;
+  }
+
+  const safeW = Math.max(200, w - 16);
+  const safeH = Math.max(200, h - 16);
+
+  let scale = Math.min(safeW / 1280, safeH / 720) * 0.98;
+
+  // Clamp para que nunca se vaya a 0
+  scale = Math.min(1.2, Math.max(0.18, scale));
+
+  presentationContainer.style.transform = `scale(${scale})`;
+}
+
 
     function showSlide(i) {
       if (i < 0) i = 0;
@@ -2618,9 +2644,20 @@
     }
 
     // Init
-    setAppHeightVar();
-    maybeShowGate();
-    showSlide(0);
+    // Init
+setAppHeightVar();
+fitToScreen();
+showSlide(0);
+
+// Reintentos cortos (soluciona el "se ve negro" en WhatsApp/iPhone)
+let tries = 0;
+(function retryFit(){
+  setAppHeightVar();
+  fitToScreen();
+  if (tries++ < 15) requestAnimationFrame(retryFit);
+})();
+
   </script>
 </body>
 </html>
+
