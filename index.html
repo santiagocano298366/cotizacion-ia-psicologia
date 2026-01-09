@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Cotización | Consultoría IA + Marketing</title>
 
   <!-- Tailwind (CDN) -->
@@ -35,25 +35,29 @@
 
 
     /* Escenario centrado */
-    .stage {
+    .stage{
       width: 100vw;
-      height: 100vh;
+      min-height: 100dvh;
       display: grid;
       place-items: center;
       position: relative;
+      padding: 12px;
     }
 
+
     /* Contenedor 1280x720 escalado a pantalla */
-    .presentation-container {
-      width: 1280px;
-      height: 720px;
+    .presentation-container{
       position: relative;
-      transform-origin: center center;
+      width: min(100vw, calc(100dvh * (16 / 9)));
+      aspect-ratio: 16 / 9;
+      height: auto;
+    
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
       border-radius: 14px;
       overflow: hidden;
       background: #0f172a;
     }
+
 
     .slide {
       width: 100%;
@@ -2416,10 +2420,7 @@ body,
     });
 
     window.addEventListener('resize', fitToScreen);
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', fitToScreen);
-      window.visualViewport.addEventListener('scroll', fitToScreen);
-    }
+
 
 
     // Init
@@ -2428,6 +2429,7 @@ body,
   </script>
 </body>
 </html>
+
 
 
 
