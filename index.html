@@ -1,1 +1,2414 @@
-<!DOCTYPE html> <html lang="es"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" /> <title>Cotización | Consultoría IA + Marketing</title> <!-- Tailwind (CDN) --> <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/> <!-- Google Fonts --> <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"/> <!-- Font Awesome --> <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/> <!-- ========================= ESTILOS GENERALES (PRESENTACIÓN) ========================== --> <style> * { margin: 0; padding: 0; box-sizing: border-box; } html, body { width: 100%; height: 100%; background: #0f172a; font-family: 'Open Sans', sans-serif; overflow: hidden; } /* En móviles, usa alto real del dispositivo */ @supports (height: 100dvh) { .stage { height: 100dvh; } } /* Escenario centrado */ .stage{ width: 100vw; min-height: 100dvh; display: grid; place-items: center; position: relative; padding: 12px; } /* Contenedor 1280x720 escalado a pantalla */ .presentation-container{ position: relative; width: min(100vw, calc(100dvh * (16 / 9))); aspect-ratio: 16 / 9; height: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border-radius: 14px; overflow: hidden; background: #0f172a; } .slide { width: 100%; height: 100%; position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity 0.45s ease, visibility 0.45s ease; background: #0f172a; } .slide.active { opacity: 1; visibility: visible; z-index: 10; } /* Barra de controles */ .nav-btn { background: rgba(59, 130, 246, 0.16); border: 1px solid rgba(59, 130, 246, 0.35); color: #93c5fd; width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; cursor: pointer; transition: transform 0.12s ease, background 0.12s ease; font-size: 1.05rem; } .nav-btn:hover { background: rgba(59,130,246,0.30); transform: translateY(-1px); } .nav-btn:active { transform: translateY(0px) scale(0.98); } .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; } .slide-counter { color: #cbd5e1; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.10em; padding: 0 10px; } /* Barra de progreso */ .progress-bar { position: fixed; top: 0; left: 0; height: 4px; width: 0%; background: #3b82f6; transition: width 0.45s ease; z-index: 1000; } /* Hint teclado */ .keyboard-hint { position: fixed; top: 18px; right: 18px; background: rgba(15, 23, 42, 0.80); color: #94a3b8; padding: 8px 14px; border-radius: 10px; font-size: 0.8rem; z-index: 1000; border: 1px solid rgba(255, 255, 255, 0.10); } /* Fullscreen */ .fullscreen-btn { position: fixed; top: 18px; left: 18px; background: rgba(15, 23, 42, 0.80); border: 1px solid rgba(255, 255, 255, 0.10); color: #93c5fd; width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; cursor: pointer; transition: background 0.12s ease; z-index: 1000; } .fullscreen-btn:hover { background: rgba(59, 130, 246, 0.25); } /* Base para todos los slide-container dentro de cada slide */ .slide .slide-container { width: 100%; height: 100%; position: relative; overflow: hidden; background: #0f172a; font-family: 'Open Sans', sans-serif; } .title-font { font-family: 'Montserrat', sans-serif; } </style> <!-- ========================= SLIDE 1 STYLES (scoped) ========================== --> <style> #slide-1 .slide-container { display: flex; flex-direction: column; } #slide-1 .bg-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; } #slide-1 .bg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.92); z-index: 1; } #slide-1 .content-wrapper { position: relative; z-index: 10; flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 80px; } #slide-1 .decor-circle-1 { position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; border-radius: 50%; background-color: #10b981; filter: blur(120px); opacity: 0.15; z-index: 2; } #slide-1 .decor-circle-2 { position: absolute; bottom: -150px; left: -150px; width: 600px; height: 600px; border-radius: 50%; background-color: #3b82f6; filter: blur(120px); opacity: 0.15; z-index: 2; } #slide-1 .glass-card { background-color: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border-radius: 16px; } #slide-1 .highlight-text { color: #4ade80; } </style> <!-- ========================= SLIDE 2 STYLES (scoped) ========================== --> <style> #slide-2 .slide-container { display:flex; background:#0f172a; } #slide-2 .decor-blob-1 { position: absolute; top: -100px; right: -50px; width: 600px; height: 600px; border-radius: 50%; background-color: #1e3a8a; filter: blur(100px); opacity: 0.3; z-index: 0; } #slide-2 .decor-blob-2 { position: absolute; bottom: -100px; left: 30%; width: 500px; height: 500px; border-radius: 50%; background-color: #064e3b; filter: blur(100px); opacity: 0.3; z-index: 0; } #slide-2 .left-col { width: 40%; height: 100%; position: relative; z-index: 10; } #slide-2 .profile-image-container { width: 100%; height: 100%; position: relative; overflow: hidden; } #slide-2 .profile-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; } #slide-2 .img-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background-color: rgba(15, 23, 42, 0.2); border-right: 4px solid #10b981; } #slide-2 .right-col { width: 60%; height: 100%; padding: 60px 80px; display:flex; flex-direction: column; justify-content: center; position: relative; z-index: 10; } #slide-2 .glass-box { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 24px; margin-bottom: 20px; display:flex; align-items: flex-start; transition: transform 0.3s ease; } #slide-2 .icon-box { min-width: 48px; height: 48px; border-radius: 10px; background-color: rgba(16, 185, 129, 0.15); display:flex; align-items:center; justify-content:center; margin-right: 20px; border: 1px solid rgba(16, 185, 129, 0.3); } #slide-2 .accent-text { color: #34d399; } #slide-2 .secondary-text { color: #94a3b8; } </style> <!-- ========================= SLIDE 3 STYLES (scoped) ========================== --> <style> #slide-3 .slide-container { display:flex; background:#0f172a; } #slide-3 .decor-circle-1 { position: absolute; top: -150px; right: -100px; width: 700px; height: 700px; border-radius: 50%; background-color: #1e40af; filter: blur(120px); opacity: 0.2; z-index: 0; } #slide-3 .decor-circle-2 { position: absolute; bottom: -200px; left: -100px; width: 800px; height: 800px; border-radius: 50%; background-color: #065f46; filter: blur(120px); opacity: 0.15; z-index: 0; } #slide-3 .content-container { position: relative; z-index: 10; width: 100%; height: 100%; display:flex; padding: 60px 80px; } #slide-3 .left-panel { flex: 0 0 38%; display:flex; flex-direction:column; justify-content:center; padding-right:50px; } #slide-3 .right-panel { flex: 1; display:flex; flex-direction:column; justify-content:center; } #slide-3 .problem-card { display:flex; align-items:center; background-color: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; transition: all 0.3s ease; } #slide-3 .icon-wrapper { width: 44px; height: 44px; border-radius: 50%; background-color: rgba(30, 41, 59, 0.8); border: 2px solid; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-right:20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); } #slide-3 .icon-time { border-color:#ef4444; color:#ef4444; } #slide-3 .icon-empathy { border-color:#f472b6; color:#f472b6; } #slide-3 .icon-visibility { border-color:#60a5fa; color:#60a5fa; } #slide-3 .icon-org { border-color:#fb923c; color:#fb923c; } #slide-3 .icon-ethics { border-color:#4ade80; color:#4ade80; } </style> <!-- ========================= SLIDE 4 STYLES (scoped) ========================== --> <style> #slide-4 .slide-container { display:flex; background:#0f172a; } #slide-4 .glow-spot-1 { position:absolute; top:-200px; left:-100px; width:700px; height:700px; border-radius:50%; background-color:#064e3b; filter: blur(150px); opacity:0.4; z-index:0; } #slide-4 .glow-spot-2 { position:absolute; bottom:-150px; right:-50px; width:800px; height:800px; border-radius:50%; background-color:#1e3a8a; filter: blur(150px); opacity:0.3; z-index:0; } #slide-4 .left-col { flex:0 0 42%; display:flex; flex-direction:column; justify-content:center; padding:80px 60px 80px 80px; position:relative; z-index:10; } #slide-4 .right-col { flex:1; display:flex; flex-direction:column; justify-content:center; padding:80px 80px 80px 40px; position:relative; z-index:10; } #slide-4 .vertical-separator { position:absolute; left:0; top:15%; bottom:15%; width:1px; background-color: rgba(255,255,255,0.1); } #slide-4 .feature-card { background-color: rgba(30,41,59,0.4); border: 1px solid rgba(52,211,153,0.2); border-radius:16px; padding:24px; margin-bottom:24px; display:flex; align-items:flex-start; position:relative; overflow:hidden; backdrop-filter: blur(10px); } #slide-4 .feature-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background-color:#34d399; } #slide-4 .feature-icon-box { width:56px; height:56px; border-radius:12px; background-color: rgba(16,185,129,0.1); display:flex; align-items:center; justify-content:center; margin-right:24px; flex-shrink:0; } #slide-4 .highlight-text { color:#34d399; } #slide-4 .white-text { color:#f8fafc; } #slide-4 .sub-text { color:#94a3b8; } #slide-4 .result-box { margin-top:10px; background-color: rgba(59,130,246,0.1); border: 1px dashed rgba(59,130,246,0.4); border-radius:12px; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; } </style> <!-- ========================= SLIDE 5 STYLES (scoped) ========================== --> <style> #slide-5 .slide-container { display:flex; flex-direction:column; background:#0f172a; } #slide-5 .bg-shape-1 { position:absolute; top:-100px; right:-100px; width:600px; height:600px; border-radius:40px; background-color: rgba(30,41,59,0.5); transform: rotate(15deg); z-index:0; } #slide-5 .bg-shape-2 { position:absolute; bottom:-50px; left:-50px; width:400px; height:400px; border-radius:50%; background-color: rgba(16,185,129,0.05); z-index:0; } #slide-5 .content-wrapper { position:relative; z-index:10; flex:1; padding:60px 80px; display:flex; flex-direction:column; } #slide-5 .header-section { margin-bottom:50px; text-align:center; } #slide-5 .items-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:30px 50px; flex:1; } #slide-5 .item-card { display:flex; align-items:flex-start; padding:20px; border-radius:16px; background-color: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease; } #slide-5 .item-card:hover { background-color: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); transform: translateY(-2px); } #slide-5 .icon-container { width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-right:20px; flex-shrink:0; box-shadow: 0 4px 6px rgba(0,0,0,0.2); } #slide-5 .bg-blue { background-color: rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); } #slide-5 .bg-green { background-color: rgba(16,185,129,0.2); color:#34d399; border:1px solid rgba(16,185,129,0.4); } #slide-5 .bg-purple { background-color: rgba(168,85,247,0.2); color:#c084fc; border:1px solid rgba(168,85,247,0.4); } #slide-5 .bg-orange { background-color: rgba(251,146,60,0.2); color:#fb923c; border:1px solid rgba(251,146,60,0.4); } #slide-5 .bg-pink { background-color: rgba(244,114,182,0.2); color:#f472b6; border:1px solid rgba(244,114,182,0.4); } #slide-5 .bg-teal { background-color: rgba(45,212,191,0.2); color:#2dd4bf; border:1px solid rgba(45,212,191,0.4); } #slide-5 .item-title { font-family:'Montserrat',sans-serif; font-size:1.25rem; font-weight:700; color:#f8fafc; margin-bottom:.5rem; line-height:1.2; } #slide-5 .item-desc { font-size:0.95rem; color:#94a3b8; line-height:1.5; margin:0; } #slide-5 .dots-pattern { position:absolute; top:20px; left:20px; width:100px; height:100px; background-image: radial-gradient(#334155 2px, transparent 2px); background-size: 10px 10px; opacity: 0.5; z-index:0; } </style> <!-- ========================= SLIDE 6 STYLES (scoped) ========================== --> <style> /* Reutiliza estructura tipo slide 5 (clases iguales), pero con fondos distintos */ #slide-6 .slide-container { display:flex; flex-direction:column; background:#0f172a; } #slide-6 .bg-shape-1 { position:absolute; top:-100px; right:-100px; width:600px; height:600px; border-radius:40px; background-color: rgba(30,41,59,0.5); transform: rotate(15deg); z-index:0; } #slide-6 .bg-shape-2 { position:absolute; bottom:-50px; left:-50px; width:400px; height:400px; border-radius:50%; background-color: rgba(59,130,246,0.05); z-index:0; } #slide-6 .content-wrapper { position:relative; z-index:10; flex:1; padding:60px 80px; display:flex; flex-direction:column; } #slide-6 .header-section { margin-bottom:50px; text-align:center; } #slide-6 .items-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:30px 50px; flex:1; } #slide-6 .item-card { display:flex; align-items:flex-start; padding:20px; border-radius:16px; background-color: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease; } #slide-6 .item-card:hover { background-color: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); transform: translateY(-2px); } #slide-6 .icon-container { width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-right:20px; flex-shrink:0; box-shadow: 0 4px 6px rgba(0,0,0,0.2); } #slide-6 .bg-blue { background-color: rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); } #slide-6 .bg-green { background-color: rgba(16,185,129,0.2); color:#34d399; border:1px solid rgba(16,185,129,0.4); } #slide-6 .bg-purple { background-color: rgba(168,85,247,0.2); color:#c084fc; border:1px solid rgba(168,85,247,0.4); } #slide-6 .bg-orange { background-color: rgba(251,146,60,0.2); color:#fb923c; border:1px solid rgba(251,146,60,0.4); } #slide-6 .bg-pink { background-color: rgba(244,114,182,0.2); color:#f472b6; border:1px solid rgba(244,114,182,0.4); } #slide-6 .bg-teal { background-color: rgba(45,212,191,0.2); color:#2dd4bf; border:1px solid rgba(45,212,191,0.4); } #slide-6 .item-title { font-family:'Montserrat',sans-serif; font-size:1.25rem; font-weight:700; color:#f8fafc; margin-bottom:.5rem; line-height:1.2; } #slide-6 .item-desc { font-size:0.95rem; color:#94a3b8; line-height:1.5; margin:0; } #slide-6 .dots-pattern { position:absolute; top:20px; left:20px; width:100px; height:100px; background-image: radial-gradient(#334155 2px, transparent 2px); background-size: 10px 10px; opacity: 0.5; z-index:0; } </style> <!-- ========================= SLIDE 7 STYLES (scoped) ========================== --> <style> #slide-7 .slide-container { display:flex; flex-direction:column; background:#0f172a; } #slide-7 .glow-bg-1 { position:absolute; top:-200px; left:20%; width:800px; height:800px; border-radius:50%; background-color: rgba(30,58,138,0.2); filter: blur(120px); z-index:0; } #slide-7 .glow-bg-2 { position:absolute; bottom:-200px; right:10%; width:600px; height:600px; border-radius:50%; background-color: rgba(6,78,59,0.2); filter: blur(100px); z-index:0; } #slide-7 .content-wrapper { position:relative; z-index:10; flex:1; padding:50px 60px; display:flex; flex-direction:column; } #slide-7 .timeline-container { flex:1; display:flex; align-items:center; justify-content:center; position:relative; margin-top:20px; } #slide-7 .timeline-line { position:absolute; top:50%; left:50px; right:50px; height:4px; background-color: rgba(255,255,255,0.1); transform: translateY(-50%); z-index:0; border-radius:4px; } #slide-7 .timeline-progress { position:absolute; top:50%; left:50px; width:85%; height:4px; background-color: rgba(59,130,246,0.5); transform: translateY(-50%); z-index:0; border-radius:4px; } #slide-7 .steps-wrapper { display:flex; justify-content:space-between; width:100%; position:relative; z-index:10; } #slide-7 .step-item { display:flex; flex-direction:column; align-items:center; width:180px; position:relative; } #slide-7 .step-node { width:64px; height:64px; border-radius:50%; background-color:#1e293b; border:4px solid #0f172a; display:flex; align-items:center; justify-content:center; margin-bottom:20px; position:relative; z-index:2; box-shadow: 0 0 0 4px rgba(59,130,246,0.3); transition: transform 0.3s ease; } #slide-7 .step-item:hover .step-node { transform: scale(1.1); background-color:#3b82f6; } #slide-7 .step-item:hover .step-node i { color:#fff !important; } #slide-7 .step-item:nth-child(odd) .step-content { position:absolute; top:90px; text-align:center; } #slide-7 .step-item:nth-child(odd) .time-badge { position:absolute; bottom:90px; } #slide-7 .step-item:nth-child(even) .step-content { position:absolute; bottom:90px; text-align:center; } #slide-7 .step-item:nth-child(even) .time-badge { position:absolute; top:90px; } #slide-7 .step-content { background-color: rgba(30,41,59,0.6); backdrop-filter: blur(8px); padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.1); width:200px; } #slide-7 .time-badge { background-color:#10b981; color:#fff; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:700; box-shadow: 0 4px 6px rgba(0,0,0,0.2); white-space:nowrap; } #slide-7 .node-1 i { color:#60a5fa; } #slide-7 .node-2 i { color:#818cf8; } #slide-7 .node-3 i { color:#a78bfa; } #slide-7 .node-4 i { color:#f472b6; } #slide-7 .node-5 i { color:#34d399; } #slide-7 .step-title { color:#fff; font-family:'Montserrat',sans-serif; font-weight:700; font-size:1rem; margin-bottom:8px; line-height:1.2; } #slide-7 .step-desc { color:#94a3b8; font-size:0.8rem; line-height:1.4; margin:0; } #slide-7 .step-number { position:absolute; top:-5px; right:-5px; width:24px; height:24px; background-color:#fff; color:#0f172a; border-radius:50%; font-size:0.75rem; font-weight:800; display:flex; align-items:center; justify-content:center; z-index:3; } </style> <!-- ========================= SLIDE 8 STYLES (scoped) ========================== --> <style> #slide-8 .slide-container { display:flex; flex-direction:column; background:#0f172a; } #slide-8 .accent-blob-1 { position:absolute; top:-100px; left:20%; width:500px; height:500px; background-color:#1e3a8a; border-radius:50%; filter: blur(100px); opacity:0.3; z-index:0; } #slide-8 .accent-blob-2 { position:absolute; bottom:-100px; right:10%; width:600px; height:600px; background-color:#064e3b; border-radius:50%; filter: blur(120px); opacity:0.25; z-index:0; } #slide-8 .content-wrapper { position:relative; z-index:10; flex:1; padding:60px 80px; display:flex; flex-direction:column; } #slide-8 .header { text-align:center; margin-bottom:40px; } #slide-8 .deliverables-grid { display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap:24px; flex:1; } #slide-8 .deliverable-card { background-color: rgba(30,41,59,0.4); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:30px; display:flex; align-items:center; transition: all 0.3s ease; position:relative; overflow:hidden; } #slide-8 .deliverable-card:hover { background-color: rgba(30,41,59,0.6); border-color: rgba(52,211,153,0.3); transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); } #slide-8 .card-accent { position:absolute; left:0; top:0; bottom:0; width:4px; background-color:#cbd5e1; transition: background-color 0.3s ease; } #slide-8 .deliverable-card:hover .card-accent { background-color:#34d399; } #slide-8 .icon-box { width:80px; height:80px; border-radius:16px; display:flex; align-items:center; justify-content:center; margin-right:24px; font-size:2rem; flex-shrink:0; position:relative; z-index:2; } #slide-8 .icon-prompts { background-color: rgba(59,130,246,0.15); color:#60a5fa; } #slide-8 .icon-examples { background-color: rgba(168,85,247,0.15); color:#c084fc; } #slide-8 .icon-calendar { background-color: rgba(251,146,60,0.15); color:#fb923c; } #slide-8 .icon-guide { background-color: rgba(16,185,129,0.15); color:#34d399; } #slide-8 .card-title { font-family:'Montserrat',sans-serif; font-size:1.25rem; font-weight:700; color:#f8fafc; margin-bottom:8px; } #slide-8 .card-desc { font-size:0.95rem; color:#94a3b8; line-height:1.5; } #slide-8 .tag-pill { display:inline-block; font-size:0.7rem; font-weight:700; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-bottom:8px; letter-spacing:0.05em; } #slide-8 .tag-prompts { background-color: rgba(59,130,246,0.2); color:#60a5fa; } #slide-8 .tag-examples { background-color: rgba(168,85,247,0.2); color:#c084fc; } #slide-8 .tag-calendar { background-color: rgba(251,146,60,0.2); color:#fb923c; } #slide-8 .tag-guide { background-color: rgba(16,185,129,0.2); color:#34d399; } #slide-8 .watermark-icon { position:absolute; right:-20px; bottom:-20px; font-size:8rem; opacity:0.03; transform: rotate(-15deg); z-index:1; color:#fff; } </style> <!-- ========================= SLIDE 9 STYLES (scoped) ========================== --> <style> #slide-9 .slide-container { display:flex; background:#0f172a; } #slide-9 .spotlight-effect { position:absolute; top:50%; left:50%; transform: translate(-50%, -50%); width:800px; height:800px; background-color:#1e3a8a; border-radius:50%; filter: blur(150px); opacity:0.2; z-index:0; } #slide-9 .accent-glow { position:absolute; top:100px; right:100px; width:400px; height:400px; background-color:#065f46; border-radius:50%; filter: blur(120px); opacity:0.2; z-index:0; } #slide-9 .content-wrapper { position:relative; z-index:10; width:100%; height:100%; display:flex; padding:0; } #slide-9 .left-panel { width:45%; padding:80px 40px 80px 80px; display:flex; flex-direction:column; justify-content:center; } #slide-9 .right-panel { width:55%; display:flex; align-items:center; justify-content:center; padding:60px; } #slide-9 .pricing-card { width:100%; max-width:500px; background-color: rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.1); border-top:4px solid #34d399; border-radius:24px; padding:40px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position:relative; backdrop-filter: blur(10px); } #slide-9 .price-tag { font-family:'Montserrat',sans-serif; font-size:4.5rem; font-weight:800; color:#fff; line-height:1; margin-bottom:0.5rem; } #slide-9 .currency { font-size:1.5rem; color:#94a3b8; font-weight:600; vertical-align:top; margin-right:5px; } #slide-9 .cop-text { font-size:1.25rem; color:#64748b; font-weight:600; } #slide-9 .feature-list { margin-top:30px; margin-bottom:30px; } #slide-9 .feature-item { display:flex; align-items:center; margin-bottom:16px; color:#e2e8f0; font-size:1rem; } #slide-9 .check-icon { color:#34d399; margin-right:12px; font-size:1.1rem; } #slide-9 .roi-box { background-color: rgba(59,130,246,0.1); border-left:3px solid #60a5fa; padding:24px; border-radius: 0 12px 12px 0; margin-top:30px; } #slide-9 .payment-pill { display:inline-flex; align-items:center; background-color: rgba(255,255,255,0.05); border-radius:8px; padding:8px 16px; margin-right:10px; font-size:0.85rem; color:#cbd5e1; } </style> <!-- ========================= SLIDE 10 STYLES (scoped) ========================== --> <style> #slide-10 .slide-container { display:flex; flex-direction:column; background:#0f172a; } #slide-10 .bg-shape-1 { position:absolute; top:-150px; right:-50px; width:700px; height:700px; border-radius:40px; background-color: rgba(30,41,59,0.5); transform: rotate(10deg); z-index:0; } #slide-10 .bg-shape-2 { position:absolute; bottom:50px; left:-100px; width:500px; height:500px; border-radius:50%; background-color: rgba(59,130,246,0.03); z-index:0; } #slide-10 .bg-accent-blob { position:absolute; top:40%; left:50%; transform: translate(-50%, -50%); width:900px; height:400px; background-color: rgba(15,23,42,0.8); border-radius:100%; filter: blur(50px); z-index:0; } #slide-10 .content-wrapper { position:relative; z-index:10; flex:1; padding:50px 80px; display:flex; flex-direction:column; } #slide-10 .header-section { text-align:center; margin-bottom:40px; } #slide-10 .segments-container { display:grid; grid-template-columns: repeat(4,1fr); gap:24px; flex:1; margin-bottom:30px; } #slide-10 .segment-card { background-color: rgba(30,41,59,0.4); border:1px solid rgba(255,255,255,0.05); border-radius:16px; padding:30px 20px; display:flex; flex-direction:column; align-items:center; text-align:center; transition: all 0.3s ease; position:relative; overflow:hidden; } #slide-10 .segment-card:hover { transform: translateY(-8px); background-color: rgba(30,41,59,0.8); border-color: rgba(255,255,255,0.15); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2), 0 10px 10px -5px rgba(0,0,0,0.1); } #slide-10 .card-top-bar { position:absolute; top:0; left:0; width:100%; height:4px; } #slide-10 .bar-blue { background-color:#3b82f6; } #slide-10 .bar-green { background-color:#10b981; } #slide-10 .bar-purple { background-color:#a855f7; } #slide-10 .bar-orange { background-color:#f97316; } #slide-10 .icon-circle { width:80px; height:80px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-size:2rem; position:relative; } #slide-10 .icon-blue { color:#60a5fa; background-color: rgba(59,130,246,0.1); } #slide-10 .icon-green { color:#34d399; background-color: rgba(16,185,129,0.1); } #slide-10 .icon-purple { color:#c084fc; background-color: rgba(168,85,247,0.1); } #slide-10 .icon-orange { color:#fb923c; background-color: rgba(249,115,22,0.1); } #slide-10 .card-title { font-family:'Montserrat',sans-serif; font-weight:700; color:#fff; font-size:1.1rem; margin-bottom:12px; line-height:1.3; min-height:44px; display:flex; align-items:center; justify-content:center; } #slide-10 .card-desc { color:#94a3b8; font-size:0.9rem; line-height:1.5; } #slide-10 .requirements-bar { background-color: rgba(15,23,42,0.6); border:1px dashed rgba(255,255,255,0.15); border-radius:12px; padding:20px 40px; display:flex; align-items:center; justify-content:space-between; } #slide-10 .req-label { display:flex; align-items:center; color:#e2e8f0; font-family:'Montserrat',sans-serif; font-weight:700; font-size:1rem; margin-right:30px; min-width:200px; } #slide-10 .req-list { display:flex; gap:40px; flex:1; justify-content:flex-end; } #slide-10 .req-item { display:flex; align-items:center; color:#cbd5e1; font-size:0.95rem; } #slide-10 .req-icon { color:#34d399; margin-right:10px; font-size:1.1rem; } #slide-10 .corner-accent { position:absolute; width:100px; height:100px; border:2px solid rgba(255,255,255,0.05); z-index:0; } #slide-10 .top-left { top:30px; left:30px; border-right:none; border-bottom:none; border-radius:20px 0 0 0; } #slide-10 .bottom-right { bottom:30px; right:30px; border-left:none; border-top:none; border-radius:0 0 20px 0; } </style> <!-- ========================= SLIDE 11 STYLES (scoped) ========================== --> <style> #slide-11 .slide-container { display:flex; flex-direction:column; background:#0f172a; } #slide-11 .bg-circle-1 { position:absolute; top:-150px; left:-100px; width:600px; height:600px; border-radius:50%; background-color: rgba(30,58,138,0.25); z-index:0; } #slide-11 .bg-circle-2 { position:absolute; bottom:-200px; right:-100px; width:700px; height:700px; border-radius:50%; background-color: rgba(6,78,59,0.2); z-index:0; } #slide-11 .grid-pattern { position:absolute; top:0; left:0; width:100%; height:100%; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size:40px 40px; z-index:0; pointer-events:none; } #slide-11 .content-wrapper { position:relative; z-index:10; flex:1; padding:50px 80px; display:flex; flex-direction:column; } #slide-11 .header-section { text-align:center; margin-bottom:40px; } #slide-11 .cards-container { display:flex; justify-content:center; gap:40px; flex:1; align-items:stretch; } #slide-11 .use-case-card { flex:1; background-color: rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.1); border-radius:20px; overflow:hidden; display:flex; flex-direction:column; transition: all 0.4s ease; position:relative; backdrop-filter: blur(10px); } #slide-11 .use-case-card:hover { transform: translateY(-10px); border-color: rgba(59,130,246,0.4); background-color: rgba(30,41,59,0.8); box-shadow: 0 20px 40px rgba(0,0,0,0.4); } #slide-11 .card-visual { height:180px; background-color: rgba(15,23,42,0.6); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; border-bottom:1px solid rgba(255,255,255,0.05); } #slide-11 .mockup-insta { width:140px; background-color:#1e293b; border-radius:12px; padding:10px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); transform: rotate(-5deg); transition: transform 0.3s ease; } #slide-11 .use-case-card:hover .mockup-insta { transform: rotate(0deg) scale(1.05); } #slide-11 .insta-header { display:flex; gap:8px; margin-bottom:10px; align-items:center; } #slide-11 .insta-avatar { width:24px; height:24px; border-radius:50%; background-color:#64748b; } #slide-11 .insta-lines { display:flex; flex-direction:column; gap:4px; } #slide-11 .insta-line { height:4px; background-color:#475569; border-radius:2px; } #slide-11 .insta-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:4px; } #slide-11 .insta-post { aspect-ratio:1; background-color:#334155; border-radius:2px; } #slide-11 .insta-post.highlight { background-color:#3b82f6; } #slide-11 .mockup-post { width:160px; background-color:#fff; border-radius:12px; padding:15px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); transform: translateY(5px); transition: transform 0.3s ease; position:relative; } #slide-11 .use-case-card:hover .mockup-post { transform: translateY(0px) scale(1.05); } #slide-11 .post-image { height:80px; background-color:#d1fae5; border-radius:8px; margin-bottom:10px; display:flex; align-items:center; justify-content:center; color:#059669; } #slide-11 .post-title-line { height:6px; width:80%; background-color:#e2e8f0; margin-bottom:6px; border-radius:3px; } #slide-11 .post-text-line { height:4px; width:60%; background-color:#f1f5f9; border-radius:2px; } #slide-11 .mockup-chat { width:150px; display:flex; flex-direction:column; gap:10px; transform: rotate(5deg); transition: transform 0.3s ease; } #slide-11 .use-case-card:hover .mockup-chat { transform: rotate(0deg) scale(1.05); } #slide-11 .chat-bubble { padding:8px 12px; border-radius:12px; font-size:8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); position:relative; } #slide-11 .bubble-left { background-color:#334155; color:#cbd5e1; align-self:flex-start; border-bottom-left-radius:2px; width:80%; } #slide-11 .bubble-right { background-color:#3b82f6; color:#fff; align-self:flex-end; border-bottom-right-radius:2px; width:85%; } #slide-11 .card-body { padding:25px; flex:1; display:flex; flex-direction:column; } #slide-11 .card-tag { display:inline-block; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; padding:4px 10px; border-radius:20px; margin-bottom:15px; align-self:flex-start; } #slide-11 .tag-blue { background-color: rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.3); } #slide-11 .tag-green { background-color: rgba(16,185,129,0.2); color:#34d399; border:1px solid rgba(16,185,129,0.3); } #slide-11 .tag-purple { background-color: rgba(168,85,247,0.2); color:#c084fc; border:1px solid rgba(168,85,247,0.3); } #slide-11 .card-title { color:#fff; font-size:1.25rem; font-weight:700; margin-bottom:12px; font-family:'Montserrat',sans-serif; } #slide-11 .card-desc { color:#94a3b8; font-size:0.9rem; line-height:1.6; margin:0; flex:1; } #slide-11 .card-footer { margin-top:20px; padding-top:15px; border-top:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; font-size:0.8rem; color:#cbd5e1; } #slide-11 .check-icon { color:#34d399; margin-right:8px; } </style> <!-- ========================= SLIDE 12 STYLES (scoped) ========================== --> <style> #slide-12 .slide-container { display:flex; background:#0f172a; } #slide-12 .bg-circle-1 { position:absolute; top:-100px; left:-100px; width:600px; height:600px; border-radius:50%; background-color: rgba(6,78,59,0.3); filter: blur(80px); z-index:0; } #slide-12 .bg-circle-2 { position:absolute; bottom:-50px; right:-50px; width:500px; height:500px; border-radius:50%; background-color: rgba(30,58,138,0.3); filter: blur(80px); z-index:0; } #slide-12 .content-wrapper { position:relative; z-index:10; width:100%; height:100%; display:flex; padding:60px 80px; } #slide-12 .left-panel { width:40%; display:flex; flex-direction:column; justify-content:center; padding-right:40px; } #slide-12 .right-panel { width:60%; display:flex; flex-direction:column; justify-content:center; } #slide-12 .decorative-line { width:80px; height:6px; background-color:#34d399; border-radius:4px; margin-bottom:30px; } #slide-12 .checklist-container { display:flex; flex-direction:column; gap:20px; } #slide-12 .check-item { display:flex; align-items:center; background-color: rgba(30,41,59,0.5); border:1px solid rgba(255,255,255,0.05); border-radius:12px; padding:20px; transition: all 0.3s ease; } #slide-12 .check-item:hover { background-color: rgba(30,41,59,0.8); border-color: rgba(52,211,153,0.3); transform: translateX(10px); box-shadow: -5px 5px 15px rgba(0,0,0,0.2); } #slide-12 .icon-box { width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-right:20px; flex-shrink:0; font-size:1.5rem; } #slide-12 .icon-ethics { background-color: rgba(16,185,129,0.15); color:#34d399; } #slide-12 .icon-custom { background-color: rgba(59,130,246,0.15); color:#60a5fa; } #slide-12 .icon-tools { background-color: rgba(251,146,60,0.15); color:#fb923c; } #slide-12 .icon-speed { background-color: rgba(244,114,182,0.15); color:#f472b6; } #slide-12 .icon-privacy { background-color: rgba(168,85,247,0.15); color:#c084fc; } #slide-12 .item-title { font-family:'Montserrat',sans-serif; font-weight:700; color:#f8fafc; font-size:1.1rem; margin-bottom:4px; } #slide-12 .item-desc { color:#94a3b8; font-size:0.9rem; line-height:1.4; margin:0; } #slide-12 .check-mark { margin-left:15px; color:#34d399; opacity:0; transform: scale(0.5); transition: all 0.3s ease; } #slide-12 .check-item:hover .check-mark { opacity:1; transform: scale(1); } #slide-12 .visual-badge { background-color: rgba(255,255,255,0.03); border-radius:20px; padding:30px; border:1px solid rgba(255,255,255,0.05); margin-top:40px; position:relative; } #slide-12 .quote-icon { position:absolute; top:-20px; left:20px; font-size:3rem; color:#34d399; background-color:#0f172a; padding:0 10px; } </style> <!-- ========================= SLIDE 13 STYLES (scoped) ========================== --> <style> #slide-13 .slide-container { display:flex; flex-direction:column; background:#0f172a; } #slide-13 .bg-mesh { position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; opacity:0.4; background-color:#0f172a; } #slide-13 .orb-1 { position:absolute; top:-100px; right:-100px; width:600px; height:600px; background-color:#2563eb; border-radius:50%; filter: blur(120px); opacity:0.3; } #slide-13 .orb-2 { position:absolute; bottom:-100px; left:-100px; width:700px; height:700px; background-color:#059669; border-radius:50%; filter: blur(140px); opacity:0.25; } #slide-13 .geo-shape { position:absolute; border:2px solid rgba(255,255,255,0.05); z-index:1; } #slide-13 .circle-lg { width:500px; height:500px; border-radius:50%; top:50%; left:50%; transform: translate(-50%, -50%); } #slide-13 .circle-md { width:350px; height:350px; border-radius:50%; top:50%; left:50%; transform: translate(-50%, -50%); border-color: rgba(59,130,246,0.1); } #slide-13 .content-wrapper { position:relative; z-index:10; flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:60px; text-align:center; } #slide-13 .cta-card { background-color: rgba(30,41,59,0.7); backdrop-filter: blur(16px); border:1px solid rgba(255,255,255,0.1); border-radius:30px; padding:50px 80px; max-width:900px; width:100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position:relative; overflow:hidden; } #slide-13 .card-top-accent { position:absolute; top:0; left:0; width:100%; height:6px; background-color:#3b82f6; } #slide-13 .headline { font-size:3.5rem; line-height:1.1; margin-bottom:24px; color:#fff; font-weight:800; } #slide-13 .subheadline { font-size:1.25rem; color:#cbd5e1; margin-bottom:40px; font-weight:300; max-width:700px; margin-left:auto; margin-right:auto; } #slide-13 .action-buttons { display:flex; gap:24px; justify-content:center; margin-bottom:40px; } #slide-13 .btn-primary { background-color:#2563eb; color:#fff; padding:16px 32px; border-radius:12px; font-family:'Montserrat',sans-serif; font-weight:700; font-size:1.1rem; display:flex; align-items:center; transition: all 0.3s ease; box-shadow: 0 10px 15px -3px rgba(37,99,235,0.3); border:1px solid rgba(255,255,255,0.1); cursor: default; } #slide-13 .btn-primary:hover { background-color:#1d4ed8; transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgba(37,99,235,0.4); } #slide-13 .btn-secondary { background-color: rgba(255,255,255,0.05); color:#e2e8f0; padding:16px 32px; border-radius:12px; font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.1rem; display:flex; align-items:center; border:1px solid rgba(255,255,255,0.2); transition: all 0.3s ease; cursor: default; } #slide-13 .btn-secondary:hover { background-color: rgba(255,255,255,0.1); border-color:#fff; } #slide-13 .bonus-tag { display:inline-flex; align-items:center; background-color: rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); padding:8px 16px; border-radius:50px; margin-bottom:24px; } #slide-13 .bonus-text { color:#34d399; font-weight:700; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.05em; margin:0; } #slide-13 .footer-info { display:flex; justify-content:center; gap:40px; color:#94a3b8; font-size:0.9rem; border-top:1px solid rgba(255,255,255,0.1); padding-top:24px; width:100%; } #slide-13 .info-item { display:flex; align-items:center; } #slide-13 .info-icon { margin-right:8px; color:#60a5fa; } #slide-13 .qr-placeholder { position:absolute; right:-20px; bottom:-20px; width:150px; height:150px; background-color:#fff; padding:10px; border-radius:12px; transform: rotate(-5deg); opacity:0.1; pointer-events:none; } </style> <!-- ========================= SLIDE 14 STYLES (scoped) ========================== --> <style> #slide-14 .slide-container { display:flex; flex-direction:column; background:#0f172a; justify-content:center; align-items:center; } #slide-14 .bg-circle-1 { position:absolute; top:-150px; left:-150px; width:600px; height:600px; background-color: rgba(30,58,138,0.4); border-radius:50%; filter: blur(120px); z-index:0; } #slide-14 .bg-circle-2 { position:absolute; bottom:-150px; right:-150px; width:700px; height:700px; background-color: rgba(6,78,59,0.3); border-radius:50%; filter: blur(140px); z-index:0; } #slide-14 .pattern-grid { position:absolute; top:0; left:0; width:100%; height:100%; background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size:30px 30px; z-index:0; opacity:0.5; } #slide-14 .content-wrapper { position:relative; z-index:10; width:100%; max-width:900px; text-align:center; padding:40px; display:flex; flex-direction:column; align-items:center; } #slide-14 .profile-container { margin-bottom:50px; } #slide-14 .avatar-placeholder { width:120px; height:120px; background-color: rgba(30,41,59,0.8); border:2px solid rgba(59,130,246,0.5); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 25px auto; box-shadow: 0 0 30px rgba(59,130,246,0.2); } #slide-14 .name-text { font-size:3rem; font-weight:800; color:#fff; line-height:1.1; margin-bottom:10px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); } #slide-14 .role-text { font-size:1.25rem; color:#94a3b8; font-weight:400; letter-spacing:0.05em; } #slide-14 .separator { width:60px; height:4px; background-color:#34d399; border-radius:2px; margin:30px auto; } #slide-14 .contact-grid { display:flex; gap:30px; justify-content:center; width:100%; margin-bottom:60px; } #slide-14 .contact-card { background-color: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); padding:20px 40px; border-radius:12px; display:flex; align-items:center; transition: all 0.3s ease; min-width:300px; } #slide-14 .contact-card:hover { background-color: rgba(255,255,255,0.08); transform: translateY(-5px); border-color: rgba(59,130,246,0.4); } #slide-14 .icon-circle { width:48px; height:48px; background-color: rgba(59,130,246,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-right:20px; color:#60a5fa; font-size:1.2rem; } #slide-14 .contact-label { font-size:0.75rem; color:#64748b; text-transform:uppercase; font-weight:700; letter-spacing:0.1em; margin-bottom:4px !important; } #slide-14 .contact-value { font-size:1.1rem; color:#e2e8f0; font-weight:600; font-family:'Montserrat',sans-serif; } #slide-14 .ethical-note { display:flex; align-items:center; background-color: rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.2); padding:12px 24px; border-radius:50px; } #slide-14 .ethical-text { color:#a7f3d0; font-size:0.9rem; margin:0; } /* ========================= FORZAR TEXTO CLARO GLOBAL ========================= */ body, .slide, .slide * { color: #f8fafc; /* Blanco suave (no quema la vista) */ } </style> </head> <body> <!-- Progress --> <div class="progress-bar" id="progressBar"></div> <!-- Fullscreen --> <button class="fullscreen-btn" id="fullscreenBtn" title="Pantalla completa"> <i class="fas fa-expand"></i> </button> <!-- Hint teclado --> <div class="keyboard-hint"> <i class="fas fa-keyboard mr-2"></i> Usa ← → o Espacio </div> <div class="stage"> <div class="presentation-container" id="presentationContainer"> <!-- SLIDE 1 --> <div class="slide active" id="slide-1"> <div class="slide-container"> <img alt="Technology Background" class="bg-image" src="https://page.gensparksite.com/slides_images/c6d78c0544901493b454908f93ee85ac.webp"/> <div class="bg-overlay"></div> <div class="decor-circle-1"></div> <div class="decor-circle-2"></div> <div class="content-wrapper"> <div class="mb-8 animate-fade-in-up"> <div class="inline-flex items-center px-4 py-2 rounded-full border border-green-500 bg-green-900 bg-opacity-20"> <i class="fas fa-brain text-green-400 mr-2 text-sm"></i> <p class="text-green-400 text-sm font-bold tracking-widest uppercase m-0">Consultoría Especializada</p> </div> </div> <div class="mb-6 max-w-5xl"> <p class="title-font text-6xl font-extrabold text-white leading-tight m-0"> Potencia tu Consultorio de Psicología con <span class="highlight-text">Inteligencia Artificial</span> </p> </div> <div class="mb-12 max-w-3xl"> <p class="text-2xl text-gray-300 font-light leading-relaxed m-0"> Estrategias de transformación digital y marketing ético diseñadas para fortalecer tu práctica clínica y conectar con más pacientes. </p> </div> <div class="w-24 h-1.5 bg-green-500 rounded-full mb-12"></div> <div class="glass-card px-10 py-6 flex items-center gap-8 shadow-2xl"> <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center border-2 border-blue-400"> <i class="fas fa-user-tie text-2xl text-white"></i> </div> <div class="text-left border-l-2 border-gray-600 pl-8"> <p class="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-1">Consultor a Cargo</p> <p class="title-font text-2xl font-bold text-white mb-1">Santiago Cano Molina</p> <p class="text-blue-300 text-base font-medium m-0 flex items-center"> <i class="fas fa-microchip mr-2 text-xs"></i> Ingeniero Mecatrónico | Consultor en Ingeniería &amp; Tecnología Aplicada </p> </div> </div> </div> <div class="absolute bottom-6 w-full text-center z-20"> <p class="text-gray-600 text-xs tracking-[0.3em] font-semibold m-0">COTIZACIÓN 2026 • SOLUCIONES DIGITALES HUMANIZADAS</p> </div> </div> </div> <!-- SLIDE 2 --> <div class="slide" id="slide-2"> <div class="slide-container"> <div class="decor-blob-1"></div> <div class="decor-blob-2"></div> <div class="left-col"> <div class="profile-image-container"> <img src="https://raw.githubusercontent.com/santiagocano298366/cotizacion-ia-psicologia/refs/heads/main/img/foto-santiago.png" alt="Santiago Cano Molina" class="profile-img"> <div class="img-overlay"></div> <div class="absolute bottom-12 right-0 bg-slate-900 bg-opacity-95 px-8 py-4 rounded-l-xl border-l-4 border-green-500 shadow-2xl"> <p class="text-white font-bold text-xl m-0 title-font">Ing. Santiago Cano</p> <p class="text-green-400 text-sm m-0">Consultor en Ingeniería &amp; Tecnología Aplicada</p> </div> </div> </div> <div class="right-col"> <div class="mb-10"> <div class="flex items-center mb-4"> <span class="h-0.5 w-12 bg-blue-500 mr-4"></span> <p class="text-blue-400 font-bold tracking-widest uppercase text-sm m-0">Sobre el Consultor</p> </div> <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0"> Experiencia Técnica con <br/> <span class="accent-text">Enfoque Humano</span> </h1> </div> <div class="flex flex-col gap-2"> <div class="glass-box"> <div class="icon-box"> <i class="fas fa-robot text-green-400 text-xl"></i> </div> <div> <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Experiencia Aplicada</h3> <p class="secondary-text text-sm m-0 leading-relaxed"> Trayectoria en la implementación práctica de herramientas de Inteligencia Artificial, optimizando procesos reales. </p> </div> </div> <div class="glass-box"> <div class="icon-box"> <i class="fas fa-hands-holding-circle text-blue-400 text-xl"></i> </div> <div> <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Enfoque Ético y Psicológico</h3> <p class="secondary-text text-sm m-0 leading-relaxed"> La tecnología es el medio, no el fin. Estrategias alineadas con las necesidades del cliente. </p> </div> </div> <div class="glass-box"> <div class="icon-box"> <i class="fas fa-chalkboard-user text-purple-400 text-xl"></i> </div> <div> <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Dinámica de Trabajo</h3> <p class="secondary-text text-sm m-0 leading-relaxed"> Metodología de taller guiado con ejemplos reales y ejercicios prácticos. No solo teoría, sino herramientas listas para usar mañana mismo. </p> </div> </div> </div> <div class="mt-8 pt-6 border-t border-slate-700"> <p class="text-slate-500 text-xs italic m-0"> <i class="fas fa-quote-left mr-2 text-slate-600"></i> Mi objetivo es que la tecnología trabaje para ti, permitiéndote enfocarte en lo que mejor sabes hacer: ayudar a tus pacientes. </p> </div> </div> </div> </div> <!-- SLIDE 3 --> <div class="slide" id="slide-3"> <div class="slide-container"> <div class="decor-circle-1"></div> <div class="decor-circle-2"></div> <div class="content-container"> <div class="left-panel"> <div class="mb-6"> <div class="inline-flex items-center px-3 py-1 rounded-full border border-red-500 bg-red-900 bg-opacity-20 mb-4"> <i class="fas fa-triangle-exclamation text-red-400 mr-2 text-xs"></i> <p class="text-red-400 text-xs font-bold tracking-widest uppercase m-0">Diagnóstico Inicial</p> </div> <h1 class="title-font text-5xl font-extrabold text-white leading-tight mb-6"> Desafíos <br/> <span class="text-red-400">Frecuentes</span> </h1> <div class="w-20 h-1.5 bg-red-500 rounded-full mb-8"></div> <p class="text-slate-300 text-lg leading-relaxed font-light mb-8"> Muchos profesionales de la salud mental se encuentran atrapados entre la necesidad de digitalizarse y la falta de herramientas adecuadas para hacerlo sin perder su esencia profesional. </p> </div> <div class="bg-slate-800 bg-opacity-50 p-6 rounded-xl border border-slate-700"> <div class="flex items-center justify-between mb-2"> <p class="text-slate-400 text-sm font-semibold m-0">Tendencia de Mercado</p> <i class="fas fa-chart-line text-slate-500"></i> </div> <p class="text-white text-4xl font-bold title-font m-0 mb-1">85%</p> <p class="text-slate-400 text-xs m-0">de los pacientes buscan referencias online antes de agendar su primera cita.</p> </div> </div> <div class="right-panel"> <div class="problem-card"> <div class="icon-wrapper icon-time"> <i class="fas fa-hourglass-half text-lg"></i> </div> <div> <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Escasez de Tiempo</h3> <p class="text-slate-400 text-sm m-0">La carga clínica diaria impide mantener una constancia real en la creación de contenido digital relevante.</p> </div> </div> <div class="problem-card"> <div class="icon-wrapper icon-empathy"> <i class="fas fa-pen-nib text-lg"></i> </div> <div> <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Bloqueo Creativo y Empático</h3> <p class="text-slate-400 text-sm m-0">Dificultad para traducir conceptos clínicos complejos a un lenguaje cercano sin perder profesionalismo.</p> </div> </div> <div class="problem-card"> <div class="icon-wrapper icon-visibility"> <i class="fas fa-ghost text-lg"></i> </div> <div> <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Invisibilidad Digital</h3> <p class="text-slate-400 text-sm m-0">Contenido valioso que se pierde en el algoritmo por falta de una estrategia visual y de copy clara.</p> </div> </div> <div class="problem-card"> <div class="icon-wrapper icon-org"> <i class="fas fa-shuffle text-lg"></i> </div> <div> <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Gestión Desorganizada</h3> <p class="text-slate-400 text-sm m-0">Publicaciones esporádicas sin una parrilla o calendario que sustente objetivos a largo plazo.</p> </div> </div> <div class="problem-card"> <div class="icon-wrapper icon-ethics"> <i class="fas fa-robot text-lg"></i> </div> <div> <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Riesgos Éticos con IA</h3> <p class="text-slate-400 text-sm m-0">Incertidumbre sobre cómo usar herramientas automáticas sin comprometer la calidad humana.</p> </div> </div> </div> </div> </div> </div> <!-- SLIDE 4 --> <div class="slide" id="slide-4"> <div class="slide-container"> <div class="glow-spot-1"></div> <div class="glow-spot-2"></div> <div class="left-col"> <div class="mb-8"> <div class="inline-flex items-center px-4 py-2 rounded-full border border-blue-500 bg-blue-900 bg-opacity-20 mb-6"> <i class="fas fa-lightbulb text-blue-400 mr-2 text-sm"></i> <p class="text-blue-400 text-sm font-bold tracking-widest uppercase m-0">La Solución Integral</p> </div> <h1 class="title-font text-5xl font-extrabold text-white leading-tight mb-6"> Estructura tu Marketing con <br/> <span class="highlight-text">IA Ética</span> </h1> <p class="sub-text text-lg leading-relaxed font-light mb-8"> Una consultoría intensiva y práctica diseñada para transformar la gestión digital de tu consultorio en solo 2 horas, eliminando la carga operativa sin sacrificar la calidad humana. </p> </div> <div class="relative w-full h-48 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl"> <img alt="Human AI Collaboration" class="w-full h-full object-cover opacity-60" src="https://page.gensparksite.com/slides_images/49403d7e47bbdc18d9c262bf7ccff0d3.webp"/> <div class="absolute inset-0 bg-slate-900 bg-opacity-40 flex flex-col justify-center items-center"> <i class="fas fa-infinity text-5xl text-white mb-2 shadow-lg"></i> <p class="text-white font-semibold tracking-wider m-0">Sinergia Profesional</p> </div> </div> </div> <div class="right-col"> <div class="vertical-separator"></div> <div class="feature-card"> <div class="feature-icon-box"> <i class="fas fa-clock text-2xl text-green-400"></i> </div> <div> <h3 class="title-font text-xl font-bold white-text mb-2 m-0">Más Contenido, Menos Tiempo</h3> <p class="sub-text text-sm m-0 leading-relaxed"> Aprende a generar ideas y redacciones base en minutos, liberando horas de tu semana para enfocarte en la atención clínica de tus pacientes. </p> </div> </div> <div class="feature-card" style="border-color: rgba(59, 130, 246, 0.3);"> <div class="feature-icon-box" style="background-color: rgba(59, 130, 246, 0.1);"> <i class="fas fa-user-doctor text-2xl text-blue-400"></i> </div> <div> <h3 class="title-font text-xl font-bold white-text mb-2 m-0">Coherencia Profesional</h3> <p class="sub-text text-sm m-0 leading-relaxed"> Desarrollamos una "voz digital" que respeta tu tono terapéutico, evitando mensajes genéricos o sensacionalistas típicos de las redes. </p> </div> </div> <div class="feature-card" style="border-color: rgba(168, 85, 247, 0.3);"> <div class="feature-icon-box" style="background-color: rgba(168, 85, 247, 0.1);"> <i class="fas fa-wand-magic-sparkles text-2xl text-purple-400"></i> </div> <div> <h3 class="title-font text-xl font-bold white-text mb-2 m-0">Prompts Personalizados</h3> <p class="sub-text text-sm m-0 leading-relaxed"> No te damos fórmulas genéricas. Creamos instrucciones específicas para tu nicho (ej. ansiedad, terapia infantil) listas para copiar y pegar. </p> </div> </div> <div class="result-box"> <div> <p class="text-blue-400 text-xs font-bold uppercase tracking-wider mb-1 m-0">Resultado Tangible</p> <p class="text-white font-semibold text-sm m-0">Parrilla mensual aplicable desde mañana</p> </div> <i class="fas fa-arrow-right text-blue-400 text-xl"></i> </div> </div> </div> </div> <!-- SLIDE 5 --> <div class="slide" id="slide-5"> <div class="slide-container"> <div class="bg-shape-1"></div> <div class="bg-shape-2"></div> <div class="dots-pattern"></div> <div class="content-wrapper"> <div class="header-section"> <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-slate-600 bg-slate-800 bg-opacity-50 mb-4"> <p class="text-slate-300 text-xs font-bold tracking-[0.2em] uppercase m-0">Alcance del Servicio</p> </div> <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0"> ¿Qué Incluye la <span class="text-green-400">Consultoría</span>? </h1> <div class="w-24 h-1 bg-green-500 mx-auto mt-6 rounded-full"></div> </div> <div class="items-grid"> <div class="item-card"> <div class="icon-container bg-blue"><i class="fas fa-magnifying-glass-chart text-2xl"></i></div> <div class="item-content"> <p class="item-title">Diagnóstico Digital Express</p> <p class="item-desc">Revisión rápida del estado actual de tus redes y presencia online para identificar oportunidades inmediatas de mejora.</p> </div> </div> <div class="item-card"> <div class="icon-container bg-green"><i class="fas fa-chalkboard-user text-2xl"></i></div> <div class="item-content"> <p class="item-title">Capacitación Práctica en IA</p> <p class="item-desc">Entrenamiento "manos a la obra" para generar ideas, textos persuasivos y gestionar tu comunidad usando inteligencia artificial.</p> </div> </div> <div class="item-card"> <div class="icon-container bg-purple"><i class="fas fa-wand-magic-sparkles text-2xl"></i></div> <div class="item-content"> <p class="item-title">Prompts Personalizados</p> <p class="item-desc">Entrega de instrucciones pre-diseñadas y adaptadas a tu nicho para crear posts educativos y mensajes empáticos al instante.</p> </div> </div> <div class="item-card"> <div class="icon-container bg-pink"><i class="fas fa-photo-film text-2xl"></i></div> <div class="item-content"> <p class="item-title">Herramientas Visuales</p> <p class="item-desc">Introducción a plataformas de IA (ej. Canva Magic) para diseñar imágenes profesionales y videos cortos sin ser diseñador.</p> </div> </div> <div class="item-card"> <div class="icon-container bg-orange"><i class="fas fa-calendar-days text-2xl"></i></div> <div class="item-content"> <p class="item-title">Parrilla de Contenido Base</p> <p class="item-desc">Construcción de un calendario mensual básico y sostenible que organiza tus publicaciones estratégicamente.</p> </div> </div> <div class="item-card"> <div class="icon-container bg-teal"><i class="fas fa-shield-heart text-2xl"></i></div> <div class="item-content"> <p class="item-title">Ética y Buenas Prácticas</p> <p class="item-desc">Guía fundamental sobre cómo mantener la confidencialidad, el tono humano y los límites profesionales al usar tecnología.</p> </div> </div> </div> </div> </div> </div> <!-- SLIDE 6 --> <div class="slide" id="slide-6"> <div class="slide-container"> <div class="bg-shape-1"></div> <div class="bg-shape-2"></div> <div class="dots-pattern"></div> <div class="content-wrapper"> <div class="header-section"> <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-slate-600 bg-slate-800 bg-opacity-50 mb-4"> <p class="text-slate-300 text-xs font-bold tracking-[0.2em] uppercase m-0">Resultados Tangibles</p> </div> <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0"> Beneficios <span class="text-blue-400">Concretos</span> </h1> <div class="w-24 h-1 bg-blue-500 mx-auto mt-6 rounded-full"></div> </div> <div class="items-grid"> <div class="item-card"> <div class="icon-container bg-blue"><i class="fas fa-clock text-2xl"></i></div> <div class="item-content"> <p class="item-title">Ahorro de Tiempo</p> <p class="item-desc">Optimización drástica de tareas repetitivas, permitiendo al equipo enfocarse más en los pacientes y menos en la pantalla.</p> </div> </div> <div class="item-card"> <div class="icon-container bg-green"><i class="fas fa-calendar-check text-2xl"></i></div> <div class="item-content"> <p class="item-title">Mayor Consistencia</p> <p class="item-desc">Publicaciones regulares y estratégicas que mantienen activa la presencia digital sin depender de la "inspiración" diaria.</p> </div> </div> <div class="item-card"> <div class="icon-container bg-pink"><i class="fas fa-hand-holding-heart text-2xl"></i></div> <div class="item-content"> <p class="item-title">Mensajes Empáticos</p> <p class="item-desc">Contenido redactado con tono profesional y humano, alineado perfectamente con la sensibilidad que requiere la psicología.</p> </div> </div> <div class="item-card"> <div class="icon-container bg-purple"><i class="fas fa-rocket text-2xl"></i></div> <div class="item-content"> <p class="item-title">Mejor Alcance y Engagement</p> <p class="item-desc">Estrategias diseñadas para conectar mejor con la audiencia, aumentando la visibilidad y la interacción en redes sociales.</p> </div> </div> <div class="item-card"> <div class="icon-container bg-orange"><i class="fas fa-users-gear text-2xl"></i></div> <div class="item-content"> <p class="item-title">Autonomía del Equipo</p> <p class="item-desc">Procesos simples y herramientas fáciles de usar que empoderan al equipo administrativo para gestionar el marketing internamente.</p> </div> </div> <div class="item-card"> <div class="icon-container bg-teal"><i class="fas fa-user-shield text-2xl"></i></div> <div class="item-content"> <p class="item-title">Uso Responsable de IA</p> <p class="item-desc">Aplicación de tecnología bajo estrictos criterios éticos, asegurando la calidad y la veracidad de la información compartida.</p> </div> </div> </div> </div> </div> </div> <!-- SLIDE 7 --> <div class="slide" id="slide-7"> <div class="slide-container"> <div class="glow-bg-1"></div> <div class="glow-bg-2"></div> <div class="content-wrapper"> <div class="text-center mb-8"> <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-500 bg-blue-900 bg-opacity-20 mb-4"> <i class="fas fa-list-check text-blue-400 mr-2 text-xs"></i> <p class="text-blue-400 text-xs font-bold tracking-[0.2em] uppercase m-0">Proceso Estructurado</p> </div> <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0"> Metodología de <span class="text-blue-400">Trabajo</span> </h1> <p class="text-slate-400 mt-4 text-lg font-light max-w-3xl mx-auto m-0"> Una sesión intensiva de 2 horas diseñada para pasar de la teoría a la práctica de inmediato. </p> </div> <div class="timeline-container"> <div class="timeline-line"></div> <div class="timeline-progress" style="background-color: rgba(59, 130, 246, 0.3);"></div> <div class="steps-wrapper"> <div class="step-item"> <div class="time-badge">10 min</div> <div class="step-node node-1"> <div class="step-number">1</div> <i class="fas fa-clipboard-list text-2xl"></i> </div> <div class="step-content"> <p class="step-title">Briefing Inicial</p> <p class="step-desc">Alineación rápida de objetivos, definición de audiencia y tono de comunicación.</p> </div> </div> <div class="step-item"> <div class="time-badge">15 min</div> <div class="step-node node-2"> <div class="step-number">2</div> <i class="fas fa-magnifying-glass-chart text-2xl"></i> </div> <div class="step-content"> <p class="step-title">Diagnóstico Express</p> <p class="step-desc">Revisión de redes actuales e identificación de oportunidades de mejora inmediatas.</p> </div> </div> <div class="step-item"> <div class="time-badge">35 min</div> <div class="step-node node-3"> <div class="step-number">3</div> <i class="fas fa-wand-magic-sparkles text-2xl"></i> </div> <div class="step-content"> <p class="step-title">Co-creación de Prompts</p> <p class="step-desc">Desarrollo de instrucciones personalizadas para generar contenido relevante.</p> </div> </div> <div class="step-item"> <div class="time-badge">45 min</div> <div class="step-node node-4"> <div class="step-number">4</div> <i class="fas fa-laptop-code text-2xl"></i> </div> <div class="step-content"> <p class="step-title">Taller Práctico</p> <p class="step-desc">Manos a la obra: creación de textos, imágenes y vídeos cortos usando IA.</p> </div> </div> <div class="step-item"> <div class="time-badge">15 min</div> <div class="step-node node-5"> <div class="step-number">5</div> <i class="fas fa-flag-checkered text-2xl"></i> </div> <div class="step-content"> <p class="step-title">Cierre y Acción</p> <p class="step-desc">Entrega de la parrilla base y definición del plan de acción para los próximos 30 días.</p> </div> </div> </div> </div> <div class="text-center mt-10"> <div class="inline-block px-6 py-2 rounded-lg bg-slate-800 border border-slate-700"> <p class="text-slate-400 text-sm m-0"> <i class="fas fa-clock mr-2 text-green-400"></i> Duración Total Estimada: <span class="text-white font-bold">2 Horas</span> </p> </div> </div> </div> </div> </div> <!-- SLIDE 8 --> <div class="slide" id="slide-8"> <div class="slide-container"> <div class="accent-blob-1"></div> <div class="accent-blob-2"></div> <div class="content-wrapper"> <div class="header"> <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-500 bg-blue-900 bg-opacity-20 mb-4"> <i class="fas fa-box-open text-blue-400 mr-2 text-sm"></i> <p class="text-blue-400 text-xs font-bold tracking-widest uppercase m-0">Materiales Incluidos</p> </div> <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0"> Entregables <span class="text-blue-400">Tangibles</span> </h1> <p class="text-slate-400 mt-4 text-lg max-w-3xl mx-auto m-0"> No solo te llevas conocimientos, te llevas herramientas listas para implementar inmediatamente. </p> </div> <div class="deliverables-grid"> <div class="deliverable-card"> <div class="card-accent"></div> <i class="fas fa-terminal watermark-icon"></i> <div class="icon-box icon-prompts"><i class="fas fa-terminal"></i></div> <div class="card-content"> <div class="tag-pill tag-prompts">Documento Editable</div> <h3 class="card-title m-0">Prompts Personalizados</h3> <p class="card-desc m-0"> Una biblioteca de instrucciones de IA adaptadas a tu especialidad (ej. TCC, Infantil), listas para copiar, pegar y generar contenido. </p> </div> </div> <div class="deliverable-card"> <div class="card-accent"></div> <i class="fas fa-images watermark-icon"></i> <div class="icon-box icon-examples"><i class="fas fa-images"></i></div> <div class="card-content"> <div class="tag-pill tag-examples">Material Visual</div> <h3 class="card-title m-0">Pack de Ejemplos</h3> <p class="card-desc m-0"> Las piezas gráficas y textos que creemos juntos durante la sesión, listos para ser tu primera semana de contenido real. </p> </div> </div> <div class="deliverable-card"> <div class="card-accent"></div> <i class="fas fa-table watermark-icon"></i> <div class="icon-box icon-calendar"><i class="fas fa-table"></i></div> <div class="card-content"> <div class="tag-pill tag-calendar">Plantilla Excel / Sheets</div> <h3 class="card-title m-0">Parrilla de Contenido</h3> <p class="card-desc m-0"> Estructura base mensual para organizar tus ideas, definir frecuencias y mantener la constancia sin agobiarte. </p> </div> </div> <div class="deliverable-card"> <div class="card-accent"></div> <i class="fas fa-book-medical watermark-icon"></i> <div class="icon-box icon-guide"><i class="fas fa-book-medical"></i></div> <div class="card-content"> <div class="tag-pill tag-guide">PDF Exclusivo</div> <h3 class="card-title m-0">Guía de Ética &amp; IA</h3> <p class="card-desc m-0"> Manual de buenas prácticas para usar inteligencia artificial respetando la confidencialidad y el código deontológico. </p> </div> </div> </div> </div> </div> </div> <!-- SLIDE 9 --> <div class="slide" id="slide-9"> <div class="slide-container"> <div class="spotlight-effect"></div> <div class="accent-glow"></div> <div class="content-wrapper"> <div class="left-panel"> <div class="mb-8"> <p class="text-blue-400 font-bold tracking-widest uppercase text-sm mb-2">Propuesta de Valor</p> <h1 class="title-font text-5xl font-extrabold text-white leading-tight mb-6"> Inversión <br/> <span class="text-green-400">Estratégica</span> </h1> <p class="text-slate-300 text-lg leading-relaxed font-light mb-0"> Esta consultoría no es un gasto operativo, es una herramienta de productividad. El objetivo es que recuperes la inversión en tu primer mes ahorrando horas de trabajo administrativo. </p> </div> <div class="roi-box"> <div class="flex items-center mb-3"> <i class="fas fa-chart-pie text-blue-400 text-xl mr-3"></i> <p class="text-white font-bold text-lg m-0 title-font">Retorno de Inversión</p> </div> <p class="text-slate-400 text-sm m-0 leading-relaxed"> Al automatizar la creación de contenido base, liberas entre <strong>4 a 6 horas mensuales</strong> que puedes dedicar a consultas con pacientes, generando ingresos directos. </p> </div> <div class="mt-12"> <p class="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-4">Medios de Pago Disponibles</p> <div class="flex flex-wrap gap-2"> <div class="payment-pill"><i class="fas fa-building-columns mr-2 text-slate-400"></i> Transferencia</div> <div class="payment-pill"><i class="fas fa-mobile-screen mr-2 text-slate-400"></i> Nequi</div> <div class="payment-pill"><i class="fas fa-wallet mr-2 text-slate-400"></i> Daviplata</div> </div> <p class="text-slate-600 text-xs mt-6 italic"> * Esta cotización tiene una validez de 15 días calendario a partir de su emisión. </p> </div> </div> <div class="right-panel"> <div class="pricing-card"> <div class="flex justify-between items-start mb-6"> <div> <p class="text-slate-400 text-xs font-bold uppercase tracking-wider m-0 mb-1">Paquete Completo</p> <p class="text-white font-bold text-xl m-0 title-font">Consultoría IA + Marketing</p> </div> <div class="bg-green-900 bg-opacity-30 border border-green-500 text-green-400 px-3 py-1 rounded-full text-xs font-bold"> Todo Incluido </div> </div> <div class="mb-8 border-b border-slate-700 pb-8"> <p class="m-0"> <span class="currency">$</span> <span class="price-tag">200.000</span> <span class="cop-text">COP</span> </p> <p class="text-slate-400 text-sm mt-2 m-0 flex items-center"> <i class="far fa-clock mr-2 text-blue-400"></i> Duración: 2 Horas </p> <p class="text-slate-400 text-sm mt-1 m-0 flex items-center"> <i class="fas fa-video mr-2 text-blue-400"></i> Modalidad: Presencial o Virtual </p> </div> <div class="feature-list"> <div class="feature-item"><i class="fas fa-check-circle check-icon"></i><p class="m-0">Diagnóstico digital inicial</p></div> <div class="feature-item"><i class="fas fa-check-circle check-icon"></i><p class="m-0">Taller práctico de IA y prompts</p></div> <div class="feature-item"><i class="fas fa-check-circle check-icon"></i><p class="m-0">Parrilla de contenido mensual</p></div> <div class="feature-item"><i class="fas fa-check-circle check-icon"></i><p class="m-0">Materiales y entregables editables</p></div> </div> <div class="mt-4 text-center"> <div class="bg-blue-600 hover:bg-blue-500 transition-colors text-white font-bold py-3 px-6 rounded-lg w-full flex items-center justify-center"> <span class="mr-2">Asegurar Tarifa</span> <i class="fas fa-arrow-right text-sm"></i> </div> <p class="text-slate-500 text-xs mt-3 m-0">Sin costos ocultos ni mensualidades obligatorias.</p> </div> </div> </div> </div> </div> </div> <!-- SLIDE 10 --> <div class="slide" id="slide-10"> <div class="slide-container"> <div class="bg-shape-1"></div> <div class="bg-shape-2"></div> <div class="bg-accent-blob"></div> <div class="corner-accent top-left"></div> <div class="corner-accent bottom-right"></div> <div class="content-wrapper"> <div class="header-section"> <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-purple-500 bg-purple-900 bg-opacity-20 mb-4"> <i class="fas fa-bullseye text-purple-400 mr-2 text-xs"></i> <p class="text-purple-300 text-xs font-bold tracking-[0.2em] uppercase m-0">Perfil del Cliente Ideal</p> </div> <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0"> ¿Para Quién es este <span class="text-purple-400">Servicio</span>? </h1> <p class="text-slate-400 mt-4 text-lg font-light max-w-3xl mx-auto m-0"> Diseñado específicamente para profesionales de la salud mental que desean crecer sin sacrificar su ética profesional. </p> </div> <div class="segments-container"> <div class="segment-card"> <div class="card-top-bar bar-blue"></div> <div class="icon-circle icon-blue"><i class="fas fa-hospital-user"></i></div> <h3 class="card-title m-0">Consultorios y Clínicas</h3> <p class="card-desc m-0">Equipos pequeños o medianos que buscan sistematizar su captación de pacientes y mejorar su imagen corporativa.</p> </div> <div class="segment-card"> <div class="card-top-bar bar-green"></div> <div class="icon-circle icon-green"><i class="fas fa-user-md"></i></div> <h3 class="card-title m-0">Psicólogos Independientes</h3> <p class="card-desc m-0">Profesionales autónomos que gestionan su propia marca y necesitan optimizar su limitado tiempo administrativo.</p> </div> <div class="segment-card"> <div class="card-top-bar bar-purple"></div> <div class="icon-circle icon-purple"><i class="fas fa-people-roof"></i></div> <h3 class="card-title m-0">Centros de Terapia</h3> <p class="card-desc m-0">Especialistas en terapia infantil, de pareja o familiar que requieren una comunicación sensible y educativa.</p> </div> <div class="segment-card"> <div class="card-top-bar bar-orange"></div> <div class="icon-circle icon-orange"><i class="fas fa-heart-pulse"></i></div> <h3 class="card-title m-0">Organizaciones de Salud</h3> <p class="card-desc m-0">Entidades que ofrecen servicios de salud mental y bienestar que desean profesionalizar su marketing digital.</p> </div> </div> <div class="requirements-bar"> <div class="req-label"> <i class="fas fa-triangle-exclamation text-yellow-500 mr-3 text-xl"></i> <span class="m-0">Requisitos Básicos</span> </div> <div class="req-list"> <div class="req-item"><i class="fas fa-wifi req-icon"></i><p class="m-0">Acceso estable a Internet</p></div> <div class="req-item"><i class="fab fa-instagram req-icon"></i><p class="m-0">Cuentas de Redes Activas</p></div> <div class="req-item"><i class="fas fa-laptop req-icon"></i><p class="m-0">1 Dispositivo por Participante</p></div> </div> </div> </div> </div> </div> <!-- SLIDE 11 --> <div class="slide" id="slide-11"> <div class="slide-container"> <div class="bg-circle-1"></div> <div class="bg-circle-2"></div> <div class="grid-pattern"></div> <div class="content-wrapper"> <div class="header-section"> <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-500 bg-blue-900 bg-opacity-20 mb-4"> <i class="fas fa-briefcase text-blue-400 mr-2 text-xs"></i> <p class="text-blue-400 text-xs font-bold tracking-[0.2em] uppercase m-0">Aplicación Real</p> </div> <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0"> Casos de Uso <span class="text-green-400">Prácticos</span> </h1> <p class="text-slate-400 mt-4 text-lg font-light max-w-3xl mx-auto m-0"> Ejemplos tangibles de lo que lograremos construir juntos durante la sesión de 2 horas. </p> </div> <div class="cards-container"> <div class="use-case-card"> <div class="card-visual"> <div class="mockup-insta"> <div class="insta-header"> <div class="insta-avatar"></div> <div class="insta-lines"> <div class="insta-line" style="width: 40px;"></div> <div class="insta-line" style="width: 25px;"></div> </div> </div> <div class="insta-grid"> <div class="insta-post highlight"></div> <div class="insta-post"></div> <div class="insta-post"></div> <div class="insta-post"></div> <div class="insta-post highlight"></div> <div class="insta-post"></div> </div> </div> </div> <div class="card-body"> <div class="card-tag tag-blue">Visibilidad</div> <h3 class="card-title m-0">Plan Mensual de Instagram</h3> <p class="card-desc m-0"> Diseño de una grilla estratégica con <strong>4 a 8 posts educativos</strong> y 4 historias interactivas. Equilibrio entre marca personal y contenido de valor. </p> <div class="card-footer"> <i class="fas fa-check-circle check-icon"></i> <span>Listo para publicar</span> </div> </div> </div> <div class="use-case-card"> <div class="card-visual"> <div class="mockup-post"> <div class="post-image"><i class="fas fa-brain text-2xl"></i></div> <div class="post-title-line"></div> <div class="post-text-line"></div> <div class="post-text-line" style="width: 40%;"></div> <div class="absolute -right-2 -bottom-2 bg-green-500 rounded-full w-8 h-8 flex items-center justify-center text-white text-xs border-2 border-white shadow"> <i class="fas fa-heart"></i> </div> </div> </div> <div class="card-body"> <div class="card-tag tag-green">Educación</div> <h3 class="card-title m-0">Campaña Psicoeducativa</h3> <p class="card-desc m-0"> Serie de contenidos enfocada en <strong>Ansiedad y Estrés</strong>. Utiliza lenguaje empático y desestigmatizante para educar a pacientes potenciales. </p> <div class="card-footer"> <i class="fas fa-check-circle check-icon"></i> <span>Formato carrusel o reel</span> </div> </div> </div> <div class="use-case-card"> <div class="card-visual"> <div class="mockup-chat"> <div class="bubble-left chat-bubble"> <div class="w-full h-1 bg-slate-400 rounded mb-1"></div> <div class="w-2/3 h-1 bg-slate-400 rounded"></div> </div> <div class="bubble-right chat-bubble"> <div class="w-full h-1 bg-blue-100 rounded mb-1"></div> <div class="w-full h-1 bg-blue-100 rounded mb-1"></div> <div class="w-1/2 h-1 bg-blue-100 rounded"></div> </div> </div> </div> <div class="card-body"> <div class="card-tag tag-purple">Gestión</div> <h3 class="card-title m-0">Protocolo de Respuestas</h3> <p class="card-desc m-0"> Scripts predefinidos para responder mensajes de pacientes. Claridad en horarios, precios y límites, manteniendo la calidez humana. </p> <div class="card-footer"> <i class="fas fa-check-circle check-icon"></i> <span>Para WhatsApp y DM</span> </div> </div> </div> </div> </div> </div> </div> <!-- SLIDE 12 --> <div class="slide" id="slide-12"> <div class="slide-container"> <div class="bg-circle-1"></div> <div class="bg-circle-2"></div> <div class="content-wrapper"> <div class="left-panel"> <div class="inline-flex items-center px-3 py-1 rounded-full border border-green-500 bg-green-900 bg-opacity-20 mb-6 self-start"> <i class="fas fa-star text-green-400 mr-2 text-xs"></i> <p class="text-green-400 text-xs font-bold tracking-widest uppercase m-0">Ventajas Competitivas</p> </div> <h1 class="title-font text-5xl font-extrabold text-white leading-tight mb-4"> ¿Por qué elegir <span class="text-green-400">esta consultoría</span>? </h1> <div class="decorative-line"></div> <p class="text-slate-300 text-lg leading-relaxed mb-0"> A diferencia de cursos genéricos de marketing, esta es una experiencia diseñada específicamente para el sector de la salud mental. </p> <div class="visual-badge"> <i class="fas fa-quote-left quote-icon"></i> <p class="text-slate-400 italic text-sm m-0 leading-relaxed"> "Entendemos que un paciente no es un cliente tradicional, y que la salud mental requiere un lenguaje único, cuidadoso y ético." </p> <div class="flex items-center mt-4"> <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white mr-3">SC</div> <p class="text-white text-xs font-bold m-0">Santiago Cano Molina</p> </div> </div> </div> <div class="right-panel"> <div class="checklist-container"> <div class="check-item"> <div class="icon-box icon-ethics"><i class="fas fa-hand-holding-heart"></i></div> <div class="item-content"> <p class="item-title m-0">Ética y Enfoque Psicológico</p> <p class="item-desc">Marketing que respeta al paciente. Evitamos sensacionalismos y priorizamos el bienestar y la información veraz.</p> </div> <i class="fas fa-check-circle check-mark"></i> </div> <div class="check-item"> <div class="icon-box icon-custom"><i class="fas fa-fingerprint"></i></div> <div class="item-content"> <p class="item-title m-0">Prompts 100% Personalizados</p> <p class="item-desc">Nada de plantillas genéricas. Configuramos la IA para que hable con TU voz y sobre TUS especialidades.</p> </div> <i class="fas fa-check-circle check-mark"></i> </div> <div class="check-item"> <div class="icon-box icon-tools"><i class="fas fa-laptop-medical"></i></div> <div class="item-content"> <p class="item-title m-0">Herramientas Accesibles</p> <p class="item-desc">Seleccionamos software fácil de usar, gratuito o de bajo costo, para que no dependas de agencias costosas.</p> </div> <i class="fas fa-check-circle check-mark"></i> </div> <div class="check-item"> <div class="icon-box icon-speed"><i class="fas fa-bolt"></i></div> <div class="item-content"> <p class="item-title m-0">Aplicabilidad Inmediata</p> <p class="item-desc">Al terminar las 2 horas, tendrás material listo para publicar al día siguiente. Teoría mínima, práctica máxima.</p> </div> <i class="fas fa-check-circle check-mark"></i> </div> <div class="check-item"> <div class="icon-box icon-privacy"><i class="fas fa-user-lock"></i></div> <div class="item-content"> <p class="item-title m-0">Confidencialidad y Trato Profesional</p> <p class="item-desc">Garantía total de privacidad sobre tus estrategias y datos internos del consultorio.</p> </div> <i class="fas fa-check-circle check-mark"></i> </div> </div> </div> </div> </div> </div> <!-- SLIDE 13 --> <div class="slide" id="slide-13"> <div class="slide-container"> <div class="bg-mesh"></div> <div class="orb-1"></div> <div class="orb-2"></div> <div class="geo-shape circle-lg"></div> <div class="geo-shape circle-md"></div> <div class="content-wrapper"> <div class="cta-card"> <div class="card-top-accent"></div> <div class="bonus-tag"> <i class="fas fa-gift text-green-400 mr-2"></i> <p class="bonus-text">Diagnóstico Previo de 10 min GRATIS</p> </div> <h1 class="headline title-font"> ¿Listo para transformar <br/> tu <span class="text-blue-500">Marketing Digital</span>? </h1> <p class="subheadline"> Agenda tu sesión de consultoría hoy y empieza a crear contenido profesional, ético y efectivo con el poder de la Inteligencia Artificial. </p> <div class="action-buttons"> <div class="btn-secondary"> <i class="fab fa-whatsapp mr-3"></i> <span>Consultar Disponibilidad</span> </div> </div> <div class="footer-info"> <div class="info-item"><i class="fas fa-users info-icon"></i><p class="m-0">Modalidad Presencial (Medellín)</p></div> <div class="info-item"><i class="fas fa-video info-icon"></i><p class="m-0">Modalidad Virtual (Zoom/Meet)</p></div> <div class="info-item"><i class="fas fa-lock info-icon"></i><p class="m-0">Reserva Segura</p></div> </div> <div class="qr-placeholder"> <i class="fas fa-qrcode text-9xl text-slate-900"></i> </div> </div> </div> </div> </div> <!-- SLIDE 14 --> <div class="slide" id="slide-14"> <div class="slide-container"> <div class="bg-circle-1"></div> <div class="bg-circle-2"></div> <div class="pattern-grid"></div> <div class="content-wrapper"> <div class="profile-container"> <div class="avatar-placeholder"> <i class="fas fa-user-tie text-5xl text-blue-400"></i> </div> <h1 class="name-text title-font">Santiago Cano Molina</h1> <p class="role-text m-0">Ingeniero Mecatrónico | Consultor en Ingeniería y Tecnología Aplicada</p> <div class="separator"></div> <p class="text-slate-300 text-lg max-w-2xl mx-auto mb-0 leading-relaxed"> Listo para potenciar tu consultorio con tecnología responsable. </p> </div> <div class="contact-grid"> <div class="contact-card"> <div class="icon-circle"><i class="fas fa-envelope"></i></div> <div class="contact-info text-left"> <p class="contact-label">Correo Electrónico</p> <p class="contact-value">scanomolina11@gmail.com</p> </div> </div> <div class="contact-card"> <div class="icon-circle"><i class="fas fa-phone"></i></div> <div class="contact-info text-left"> <p class="contact-label">Teléfono / WhatsApp</p> <p class="contact-value">+57 3002654474</p> </div> </div> </div> <div class="ethical-note"> <i class="fas fa-shield-halved text-emerald-400 mr-3 text-lg"></i> <p class="ethical-text"> <strong>Garantía de Confidencialidad:</strong> Trabajo 100% alineado con los principios éticos. </p> </div> </div> </div> </div> </div> </div> <!-- Controls --> <div class="nav-controls" role="navigation" aria-label="Controles de la presentación"> <button class="nav-btn" id="prevBtn" title="Anterior (←)"> <i class="fas fa-chevron-left"></i> </button> <div class="slide-counter"> <span id="currentSlide">1</span> / <span id="totalSlides">14</span> </div> <button class="nav-btn" id="nextBtn" title="Siguiente (→)"> <i class="fas fa-chevron-right"></i> </button> </div> <script> // ======= Slides ======= const presentationContainer = document.getElementById('presentationContainer'); const slides = Array.from(document.querySelectorAll('.slide')); const totalSlides = slides.length; const prevBtn = document.getElementById('prevBtn'); const nextBtn = document.getElementById('nextBtn'); const currentSlideEl = document.getElementById('currentSlide'); const totalSlidesEl = document.getElementById('totalSlides'); const progressBar = document.getElementById('progressBar'); totalSlidesEl.textContent = totalSlides; let index = 0; function fitToScreen() { const vv = window.visualViewport; const w = vv ? vv.width : window.innerWidth; const h = vv ? vv.height : window.innerHeight; // margen para que no choque con barras del navegador / controles const safeH = h - 20; const scale = Math.min(w / 1280, safeH / 720) * 0.98; presentationContainer.style.transform = scale(${scale}); } function showSlide(i) { if (i < 0) i = 0; if (i >= totalSlides) i = totalSlides - 1; slides.forEach((s, k) => s.classList.toggle('active', k === i)); index = i; currentSlideEl.textContent = (index + 1); progressBar.style.width = (((index + 1) / totalSlides) * 100) + '%'; prevBtn.disabled = index === 0; nextBtn.disabled = index === totalSlides - 1; } function nextSlide() { if (index < totalSlides - 1) showSlide(index + 1); } function prevSlide() { if (index > 0) showSlide(index - 1); } prevBtn.addEventListener('click', prevSlide); nextBtn.addEventListener('click', nextSlide); // Teclado document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); } if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); } if (e.key === 'Home') { e.preventDefault(); showSlide(0); } if (e.key === 'End') { e.preventDefault(); showSlide(totalSlides - 1); } }); // Click en slide: derecha avanza / izquierda retrocede presentationContainer.addEventListener('click', (e) => { // Ignorar clicks en controles (por si se solapan) if (e.target.closest('.nav-controls') || e.target.closest('.fullscreen-btn')) return; const rect = presentationContainer.getBoundingClientRect(); const x = e.clientX - rect.left; if (x > rect.width / 2) nextSlide(); else prevSlide(); }); // Swipe móvil let touchStartX = null; window.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive: true }); window.addEventListener('touchend', (e) => { if (touchStartX === null) return; const dx = e.changedTouches[0].clientX - touchStartX; if (Math.abs(dx) > 50) { if (dx > 0) prevSlide(); else nextSlide(); } touchStartX = null; }, { passive: true }); // Fullscreen const fullscreenBtn = document.getElementById('fullscreenBtn'); fullscreenBtn.addEventListener('click', async () => { try { if (!document.fullscreenElement) { await document.documentElement.requestFullscreen(); fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>'; } else { await document.exitFullscreen(); fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>'; } setTimeout(fitToScreen, 50); } catch (err) { console.error(err); } }); document.addEventListener('fullscreenchange', () => { fullscreenBtn.innerHTML = document.fullscreenElement ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>'; setTimeout(fitToScreen, 50); }); window.addEventListener('resize', fitToScreen); // Init fitToScreen(); showSlide(0); </script> </body> </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cotización | Consultoría IA + Marketing</title>
+
+  <!-- Tailwind (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+
+  <!-- Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+
+  <!-- =========================
+       ESTILOS GENERALES (PRESENTACIÓN)
+  ========================== -->
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #0f172a;
+      font-family: 'Open Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Escenario centrado */
+    .stage {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    /* Contenedor 1280x720 escalado a pantalla */
+    .presentation-container {
+      width: 1280px;
+      height: 720px;
+      position: relative;
+      transform-origin: center center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #0f172a;
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.45s ease, visibility 0.45s ease;
+      background: #0f172a;
+    }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 10;
+    }
+
+    /* Barra de controles */
+
+
+    .nav-btn {
+      background: rgba(59, 130, 246, 0.16);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: #93c5fd;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.12s ease;
+      font-size: 1.05rem;
+    }
+    .nav-btn:hover { background: rgba(59,130,246,0.30); transform: translateY(-1px); }
+    .nav-btn:active { transform: translateY(0px) scale(0.98); }
+    .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .slide-counter {
+      color: #cbd5e1;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.10em;
+      padding: 0 10px;
+    }
+
+    /* Barra de progreso */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0%;
+      background: #3b82f6;
+      transition: width 0.45s ease;
+      z-index: 1000;
+    }
+
+    /* Hint teclado */
+    .keyboard-hint {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      background: rgba(15, 23, 42, 0.80);
+      color: #94a3b8;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      z-index: 1000;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    /* Fullscreen */
+    .fullscreen-btn {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      background: rgba(15, 23, 42, 0.80);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      color: #93c5fd;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background 0.12s ease;
+      z-index: 1000;
+    }
+    .fullscreen-btn:hover { background: rgba(59, 130, 246, 0.25); }
+
+    /* Base para todos los slide-container dentro de cada slide */
+    .slide .slide-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      background: #0f172a;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .title-font { font-family: 'Montserrat', sans-serif; }
+  </style>
+
+  <!-- =========================
+       SLIDE 1 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-1 .slide-container {
+      display: flex;
+      flex-direction: column;
+    }
+    #slide-1 .bg-image {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: 0;
+    }
+    #slide-1 .bg-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(15, 23, 42, 0.92); z-index: 1;
+    }
+    #slide-1 .content-wrapper {
+      position: relative; z-index: 10; flex: 1;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 0 80px;
+    }
+    #slide-1 .decor-circle-1 {
+      position: absolute; top: -100px; right: -100px; width: 500px; height: 500px;
+      border-radius: 50%; background-color: #10b981; filter: blur(120px);
+      opacity: 0.15; z-index: 2;
+    }
+    #slide-1 .decor-circle-2 {
+      position: absolute; bottom: -150px; left: -150px; width: 600px; height: 600px;
+      border-radius: 50%; background-color: #3b82f6; filter: blur(120px);
+      opacity: 0.15; z-index: 2;
+    }
+    #slide-1 .glass-card {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      border-radius: 16px;
+    }
+    #slide-1 .highlight-text { color: #4ade80; }
+  </style>
+
+  <!-- =========================
+       SLIDE 2 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-2 .slide-container { display:flex; background:#0f172a; }
+    #slide-2 .decor-blob-1 {
+      position: absolute; top: -100px; right: -50px; width: 600px; height: 600px;
+      border-radius: 50%; background-color: #1e3a8a; filter: blur(100px);
+      opacity: 0.3; z-index: 0;
+    }
+    #slide-2 .decor-blob-2 {
+      position: absolute; bottom: -100px; left: 30%; width: 500px; height: 500px;
+      border-radius: 50%; background-color: #064e3b; filter: blur(100px);
+      opacity: 0.3; z-index: 0;
+    }
+    #slide-2 .left-col { width: 40%; height: 100%; position: relative; z-index: 10; }
+    #slide-2 .profile-image-container { width: 100%; height: 100%; position: relative; overflow: hidden; }
+    #slide-2 .profile-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    #slide-2 .img-overlay {
+      position: absolute; top:0; left:0; width:100%; height:100%;
+      background-color: rgba(15, 23, 42, 0.2);
+      border-right: 4px solid #10b981;
+    }
+    #slide-2 .right-col {
+      width: 60%; height: 100%;
+      padding: 60px 80px;
+      display:flex; flex-direction: column; justify-content: center;
+      position: relative; z-index: 10;
+    }
+    #slide-2 .glass-box {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      display:flex; align-items: flex-start;
+      transition: transform 0.3s ease;
+    }
+    #slide-2 .icon-box {
+      min-width: 48px; height: 48px; border-radius: 10px;
+      background-color: rgba(16, 185, 129, 0.15);
+      display:flex; align-items:center; justify-content:center;
+      margin-right: 20px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    #slide-2 .accent-text { color: #34d399; }
+    #slide-2 .secondary-text { color: #94a3b8; }
+  </style>
+
+  <!-- =========================
+       SLIDE 3 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-3 .slide-container { display:flex; background:#0f172a; }
+    #slide-3 .decor-circle-1 {
+      position: absolute; top: -150px; right: -100px; width: 700px; height: 700px;
+      border-radius: 50%; background-color: #1e40af; filter: blur(120px);
+      opacity: 0.2; z-index: 0;
+    }
+    #slide-3 .decor-circle-2 {
+      position: absolute; bottom: -200px; left: -100px; width: 800px; height: 800px;
+      border-radius: 50%; background-color: #065f46; filter: blur(120px);
+      opacity: 0.15; z-index: 0;
+    }
+    #slide-3 .content-container {
+      position: relative; z-index: 10; width: 100%; height: 100%;
+      display:flex; padding: 60px 80px;
+    }
+    #slide-3 .left-panel { flex: 0 0 38%; display:flex; flex-direction:column; justify-content:center; padding-right:50px; }
+    #slide-3 .right-panel { flex: 1; display:flex; flex-direction:column; justify-content:center; }
+    #slide-3 .problem-card {
+      display:flex; align-items:center;
+      background-color: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+      transition: all 0.3s ease;
+    }
+    #slide-3 .icon-wrapper {
+      width: 44px; height: 44px; border-radius: 50%;
+      background-color: rgba(30, 41, 59, 0.8);
+      border: 2px solid;
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0; margin-right:20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    #slide-3 .icon-time { border-color:#ef4444; color:#ef4444; }
+    #slide-3 .icon-empathy { border-color:#f472b6; color:#f472b6; }
+    #slide-3 .icon-visibility { border-color:#60a5fa; color:#60a5fa; }
+    #slide-3 .icon-org { border-color:#fb923c; color:#fb923c; }
+    #slide-3 .icon-ethics { border-color:#4ade80; color:#4ade80; }
+  </style>
+
+  <!-- =========================
+       SLIDE 4 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-4 .slide-container { display:flex; background:#0f172a; }
+    #slide-4 .glow-spot-1 {
+      position:absolute; top:-200px; left:-100px; width:700px; height:700px;
+      border-radius:50%; background-color:#064e3b; filter: blur(150px);
+      opacity:0.4; z-index:0;
+    }
+    #slide-4 .glow-spot-2 {
+      position:absolute; bottom:-150px; right:-50px; width:800px; height:800px;
+      border-radius:50%; background-color:#1e3a8a; filter: blur(150px);
+      opacity:0.3; z-index:0;
+    }
+    #slide-4 .left-col {
+      flex:0 0 42%;
+      display:flex; flex-direction:column; justify-content:center;
+      padding:80px 60px 80px 80px;
+      position:relative; z-index:10;
+    }
+    #slide-4 .right-col {
+      flex:1;
+      display:flex; flex-direction:column; justify-content:center;
+      padding:80px 80px 80px 40px;
+      position:relative; z-index:10;
+    }
+    #slide-4 .vertical-separator {
+      position:absolute; left:0; top:15%; bottom:15%;
+      width:1px; background-color: rgba(255,255,255,0.1);
+    }
+    #slide-4 .feature-card {
+      background-color: rgba(30,41,59,0.4);
+      border: 1px solid rgba(52,211,153,0.2);
+      border-radius:16px;
+      padding:24px;
+      margin-bottom:24px;
+      display:flex; align-items:flex-start;
+      position:relative; overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+    #slide-4 .feature-card::before {
+      content:'';
+      position:absolute; left:0; top:0; bottom:0;
+      width:4px; background-color:#34d399;
+    }
+    #slide-4 .feature-icon-box {
+      width:56px; height:56px; border-radius:12px;
+      background-color: rgba(16,185,129,0.1);
+      display:flex; align-items:center; justify-content:center;
+      margin-right:24px; flex-shrink:0;
+    }
+    #slide-4 .highlight-text { color:#34d399; }
+    #slide-4 .white-text { color:#f8fafc; }
+    #slide-4 .sub-text { color:#94a3b8; }
+    #slide-4 .result-box {
+      margin-top:10px;
+      background-color: rgba(59,130,246,0.1);
+      border: 1px dashed rgba(59,130,246,0.4);
+      border-radius:12px;
+      padding:16px 24px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+  </style>
+
+  <!-- =========================
+       SLIDE 5 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-5 .slide-container { display:flex; flex-direction:column; background:#0f172a; }
+    #slide-5 .bg-shape-1 {
+      position:absolute; top:-100px; right:-100px; width:600px; height:600px;
+      border-radius:40px; background-color: rgba(30,41,59,0.5);
+      transform: rotate(15deg); z-index:0;
+    }
+    #slide-5 .bg-shape-2 {
+      position:absolute; bottom:-50px; left:-50px; width:400px; height:400px;
+      border-radius:50%; background-color: rgba(16,185,129,0.05); z-index:0;
+    }
+    #slide-5 .content-wrapper {
+      position:relative; z-index:10; flex:1; padding:60px 80px;
+      display:flex; flex-direction:column;
+    }
+    #slide-5 .header-section { margin-bottom:50px; text-align:center; }
+    #slide-5 .items-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:30px 50px; flex:1; }
+    #slide-5 .item-card {
+      display:flex; align-items:flex-start;
+      padding:20px; border-radius:16px;
+      background-color: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+    }
+    #slide-5 .item-card:hover {
+      background-color: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+    }
+    #slide-5 .icon-container {
+      width:60px; height:60px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      margin-right:20px; flex-shrink:0;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+    #slide-5 .bg-blue { background-color: rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); }
+    #slide-5 .bg-green { background-color: rgba(16,185,129,0.2); color:#34d399; border:1px solid rgba(16,185,129,0.4); }
+    #slide-5 .bg-purple { background-color: rgba(168,85,247,0.2); color:#c084fc; border:1px solid rgba(168,85,247,0.4); }
+    #slide-5 .bg-orange { background-color: rgba(251,146,60,0.2); color:#fb923c; border:1px solid rgba(251,146,60,0.4); }
+    #slide-5 .bg-pink { background-color: rgba(244,114,182,0.2); color:#f472b6; border:1px solid rgba(244,114,182,0.4); }
+    #slide-5 .bg-teal { background-color: rgba(45,212,191,0.2); color:#2dd4bf; border:1px solid rgba(45,212,191,0.4); }
+    #slide-5 .item-title { font-family:'Montserrat',sans-serif; font-size:1.25rem; font-weight:700; color:#f8fafc; margin-bottom:.5rem; line-height:1.2; }
+    #slide-5 .item-desc { font-size:0.95rem; color:#94a3b8; line-height:1.5; margin:0; }
+    #slide-5 .dots-pattern {
+      position:absolute; top:20px; left:20px; width:100px; height:100px;
+      background-image: radial-gradient(#334155 2px, transparent 2px);
+      background-size: 10px 10px;
+      opacity: 0.5; z-index:0;
+    }
+  </style>
+
+  <!-- =========================
+       SLIDE 6 STYLES (scoped)
+  ========================== -->
+  <style>
+    /* Reutiliza estructura tipo slide 5 (clases iguales), pero con fondos distintos */
+    #slide-6 .slide-container { display:flex; flex-direction:column; background:#0f172a; }
+    #slide-6 .bg-shape-1 {
+      position:absolute; top:-100px; right:-100px; width:600px; height:600px;
+      border-radius:40px; background-color: rgba(30,41,59,0.5);
+      transform: rotate(15deg); z-index:0;
+    }
+    #slide-6 .bg-shape-2 {
+      position:absolute; bottom:-50px; left:-50px; width:400px; height:400px;
+      border-radius:50%; background-color: rgba(59,130,246,0.05); z-index:0;
+    }
+    #slide-6 .content-wrapper { position:relative; z-index:10; flex:1; padding:60px 80px; display:flex; flex-direction:column; }
+    #slide-6 .header-section { margin-bottom:50px; text-align:center; }
+    #slide-6 .items-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:30px 50px; flex:1; }
+    #slide-6 .item-card {
+      display:flex; align-items:flex-start; padding:20px; border-radius:16px;
+      background-color: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+    }
+    #slide-6 .item-card:hover {
+      background-color: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+    }
+    #slide-6 .icon-container {
+      width:60px; height:60px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      margin-right:20px; flex-shrink:0;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+    #slide-6 .bg-blue { background-color: rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); }
+    #slide-6 .bg-green { background-color: rgba(16,185,129,0.2); color:#34d399; border:1px solid rgba(16,185,129,0.4); }
+    #slide-6 .bg-purple { background-color: rgba(168,85,247,0.2); color:#c084fc; border:1px solid rgba(168,85,247,0.4); }
+    #slide-6 .bg-orange { background-color: rgba(251,146,60,0.2); color:#fb923c; border:1px solid rgba(251,146,60,0.4); }
+    #slide-6 .bg-pink { background-color: rgba(244,114,182,0.2); color:#f472b6; border:1px solid rgba(244,114,182,0.4); }
+    #slide-6 .bg-teal { background-color: rgba(45,212,191,0.2); color:#2dd4bf; border:1px solid rgba(45,212,191,0.4); }
+    #slide-6 .item-title { font-family:'Montserrat',sans-serif; font-size:1.25rem; font-weight:700; color:#f8fafc; margin-bottom:.5rem; line-height:1.2; }
+    #slide-6 .item-desc { font-size:0.95rem; color:#94a3b8; line-height:1.5; margin:0; }
+    #slide-6 .dots-pattern {
+      position:absolute; top:20px; left:20px; width:100px; height:100px;
+      background-image: radial-gradient(#334155 2px, transparent 2px);
+      background-size: 10px 10px;
+      opacity: 0.5; z-index:0;
+    }
+  </style>
+
+  <!-- =========================
+       SLIDE 7 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-7 .slide-container { display:flex; flex-direction:column; background:#0f172a; }
+    #slide-7 .glow-bg-1 {
+      position:absolute; top:-200px; left:20%;
+      width:800px; height:800px; border-radius:50%;
+      background-color: rgba(30,58,138,0.2);
+      filter: blur(120px); z-index:0;
+    }
+    #slide-7 .glow-bg-2 {
+      position:absolute; bottom:-200px; right:10%;
+      width:600px; height:600px; border-radius:50%;
+      background-color: rgba(6,78,59,0.2);
+      filter: blur(100px); z-index:0;
+    }
+    #slide-7 .content-wrapper { position:relative; z-index:10; flex:1; padding:50px 60px; display:flex; flex-direction:column; }
+    #slide-7 .timeline-container { flex:1; display:flex; align-items:center; justify-content:center; position:relative; margin-top:20px; }
+    #slide-7 .timeline-line {
+      position:absolute; top:50%; left:50px; right:50px; height:4px;
+      background-color: rgba(255,255,255,0.1);
+      transform: translateY(-50%);
+      z-index:0; border-radius:4px;
+    }
+    #slide-7 .timeline-progress {
+      position:absolute; top:50%; left:50px; width:85%; height:4px;
+      background-color: rgba(59,130,246,0.5);
+      transform: translateY(-50%);
+      z-index:0; border-radius:4px;
+    }
+    #slide-7 .steps-wrapper { display:flex; justify-content:space-between; width:100%; position:relative; z-index:10; }
+    #slide-7 .step-item { display:flex; flex-direction:column; align-items:center; width:180px; position:relative; }
+    #slide-7 .step-node {
+      width:64px; height:64px; border-radius:50%;
+      background-color:#1e293b; border:4px solid #0f172a;
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom:20px; position:relative; z-index:2;
+      box-shadow: 0 0 0 4px rgba(59,130,246,0.3);
+      transition: transform 0.3s ease;
+    }
+    #slide-7 .step-item:hover .step-node { transform: scale(1.1); background-color:#3b82f6; }
+    #slide-7 .step-item:hover .step-node i { color:#fff !important; }
+    #slide-7 .step-item:nth-child(odd) .step-content { position:absolute; top:90px; text-align:center; }
+    #slide-7 .step-item:nth-child(odd) .time-badge { position:absolute; bottom:90px; }
+    #slide-7 .step-item:nth-child(even) .step-content { position:absolute; bottom:90px; text-align:center; }
+    #slide-7 .step-item:nth-child(even) .time-badge { position:absolute; top:90px; }
+    #slide-7 .step-content {
+      background-color: rgba(30,41,59,0.6);
+      backdrop-filter: blur(8px);
+      padding:15px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.1);
+      width:200px;
+    }
+    #slide-7 .time-badge {
+      background-color:#10b981; color:#fff;
+      padding:4px 12px; border-radius:20px;
+      font-size:0.8rem; font-weight:700;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      white-space:nowrap;
+    }
+    #slide-7 .node-1 i { color:#60a5fa; }
+    #slide-7 .node-2 i { color:#818cf8; }
+    #slide-7 .node-3 i { color:#a78bfa; }
+    #slide-7 .node-4 i { color:#f472b6; }
+    #slide-7 .node-5 i { color:#34d399; }
+    #slide-7 .step-title { color:#fff; font-family:'Montserrat',sans-serif; font-weight:700; font-size:1rem; margin-bottom:8px; line-height:1.2; }
+    #slide-7 .step-desc { color:#94a3b8; font-size:0.8rem; line-height:1.4; margin:0; }
+    #slide-7 .step-number {
+      position:absolute; top:-5px; right:-5px; width:24px; height:24px;
+      background-color:#fff; color:#0f172a; border-radius:50%;
+      font-size:0.75rem; font-weight:800;
+      display:flex; align-items:center; justify-content:center;
+      z-index:3;
+    }
+  </style>
+
+  <!-- =========================
+       SLIDE 8 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-8 .slide-container { display:flex; flex-direction:column; background:#0f172a; }
+    #slide-8 .accent-blob-1 {
+      position:absolute; top:-100px; left:20%;
+      width:500px; height:500px; background-color:#1e3a8a;
+      border-radius:50%; filter: blur(100px);
+      opacity:0.3; z-index:0;
+    }
+    #slide-8 .accent-blob-2 {
+      position:absolute; bottom:-100px; right:10%;
+      width:600px; height:600px; background-color:#064e3b;
+      border-radius:50%; filter: blur(120px);
+      opacity:0.25; z-index:0;
+    }
+    #slide-8 .content-wrapper { position:relative; z-index:10; flex:1; padding:60px 80px; display:flex; flex-direction:column; }
+    #slide-8 .header { text-align:center; margin-bottom:40px; }
+    #slide-8 .deliverables-grid {
+      display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+      gap:24px; flex:1;
+    }
+    #slide-8 .deliverable-card {
+      background-color: rgba(30,41,59,0.4);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px;
+      padding:30px;
+      display:flex; align-items:center;
+      transition: all 0.3s ease;
+      position:relative; overflow:hidden;
+    }
+    #slide-8 .deliverable-card:hover {
+      background-color: rgba(30,41,59,0.6);
+      border-color: rgba(52,211,153,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+    }
+    #slide-8 .card-accent { position:absolute; left:0; top:0; bottom:0; width:4px; background-color:#cbd5e1; transition: background-color 0.3s ease; }
+    #slide-8 .deliverable-card:hover .card-accent { background-color:#34d399; }
+    #slide-8 .icon-box {
+      width:80px; height:80px; border-radius:16px;
+      display:flex; align-items:center; justify-content:center;
+      margin-right:24px; font-size:2rem; flex-shrink:0; position:relative; z-index:2;
+    }
+    #slide-8 .icon-prompts { background-color: rgba(59,130,246,0.15); color:#60a5fa; }
+    #slide-8 .icon-examples { background-color: rgba(168,85,247,0.15); color:#c084fc; }
+    #slide-8 .icon-calendar { background-color: rgba(251,146,60,0.15); color:#fb923c; }
+    #slide-8 .icon-guide { background-color: rgba(16,185,129,0.15); color:#34d399; }
+    #slide-8 .card-title { font-family:'Montserrat',sans-serif; font-size:1.25rem; font-weight:700; color:#f8fafc; margin-bottom:8px; }
+    #slide-8 .card-desc { font-size:0.95rem; color:#94a3b8; line-height:1.5; }
+    #slide-8 .tag-pill { display:inline-block; font-size:0.7rem; font-weight:700; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-bottom:8px; letter-spacing:0.05em; }
+    #slide-8 .tag-prompts { background-color: rgba(59,130,246,0.2); color:#60a5fa; }
+    #slide-8 .tag-examples { background-color: rgba(168,85,247,0.2); color:#c084fc; }
+    #slide-8 .tag-calendar { background-color: rgba(251,146,60,0.2); color:#fb923c; }
+    #slide-8 .tag-guide { background-color: rgba(16,185,129,0.2); color:#34d399; }
+    #slide-8 .watermark-icon {
+      position:absolute; right:-20px; bottom:-20px;
+      font-size:8rem; opacity:0.03; transform: rotate(-15deg);
+      z-index:1; color:#fff;
+    }
+  </style>
+
+  <!-- =========================
+       SLIDE 9 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-9 .slide-container { display:flex; background:#0f172a; }
+    #slide-9 .spotlight-effect {
+      position:absolute; top:50%; left:50%;
+      transform: translate(-50%, -50%);
+      width:800px; height:800px;
+      background-color:#1e3a8a;
+      border-radius:50%;
+      filter: blur(150px);
+      opacity:0.2; z-index:0;
+    }
+    #slide-9 .accent-glow {
+      position:absolute; top:100px; right:100px;
+      width:400px; height:400px;
+      background-color:#065f46;
+      border-radius:50%;
+      filter: blur(120px);
+      opacity:0.2; z-index:0;
+    }
+    #slide-9 .content-wrapper {
+      position:relative; z-index:10;
+      width:100%; height:100%;
+      display:flex; padding:0;
+    }
+    #slide-9 .left-panel {
+      width:45%;
+      padding:80px 40px 80px 80px;
+      display:flex; flex-direction:column; justify-content:center;
+    }
+    #slide-9 .right-panel {
+      width:55%;
+      display:flex; align-items:center; justify-content:center;
+      padding:60px;
+    }
+    #slide-9 .pricing-card {
+      width:100%; max-width:500px;
+      background-color: rgba(30,41,59,0.6);
+      border:1px solid rgba(255,255,255,0.1);
+      border-top:4px solid #34d399;
+      border-radius:24px;
+      padding:40px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      position:relative;
+      backdrop-filter: blur(10px);
+    }
+    #slide-9 .price-tag {
+      font-family:'Montserrat',sans-serif;
+      font-size:4.5rem; font-weight:800; color:#fff;
+      line-height:1; margin-bottom:0.5rem;
+    }
+    #slide-9 .currency { font-size:1.5rem; color:#94a3b8; font-weight:600; vertical-align:top; margin-right:5px; }
+    #slide-9 .cop-text { font-size:1.25rem; color:#64748b; font-weight:600; }
+    #slide-9 .feature-list { margin-top:30px; margin-bottom:30px; }
+    #slide-9 .feature-item { display:flex; align-items:center; margin-bottom:16px; color:#e2e8f0; font-size:1rem; }
+    #slide-9 .check-icon { color:#34d399; margin-right:12px; font-size:1.1rem; }
+    #slide-9 .roi-box {
+      background-color: rgba(59,130,246,0.1);
+      border-left:3px solid #60a5fa;
+      padding:24px;
+      border-radius: 0 12px 12px 0;
+      margin-top:30px;
+    }
+    #slide-9 .payment-pill {
+      display:inline-flex; align-items:center;
+      background-color: rgba(255,255,255,0.05);
+      border-radius:8px;
+      padding:8px 16px;
+      margin-right:10px;
+      font-size:0.85rem;
+      color:#cbd5e1;
+    }
+  </style>
+
+  <!-- =========================
+       SLIDE 10 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-10 .slide-container { display:flex; flex-direction:column; background:#0f172a; }
+    #slide-10 .bg-shape-1 {
+      position:absolute; top:-150px; right:-50px;
+      width:700px; height:700px;
+      border-radius:40px;
+      background-color: rgba(30,41,59,0.5);
+      transform: rotate(10deg);
+      z-index:0;
+    }
+    #slide-10 .bg-shape-2 {
+      position:absolute; bottom:50px; left:-100px;
+      width:500px; height:500px;
+      border-radius:50%;
+      background-color: rgba(59,130,246,0.03);
+      z-index:0;
+    }
+    #slide-10 .bg-accent-blob {
+      position:absolute; top:40%; left:50%;
+      transform: translate(-50%, -50%);
+      width:900px; height:400px;
+      background-color: rgba(15,23,42,0.8);
+      border-radius:100%;
+      filter: blur(50px);
+      z-index:0;
+    }
+    #slide-10 .content-wrapper { position:relative; z-index:10; flex:1; padding:50px 80px; display:flex; flex-direction:column; }
+    #slide-10 .header-section { text-align:center; margin-bottom:40px; }
+    #slide-10 .segments-container { display:grid; grid-template-columns: repeat(4,1fr); gap:24px; flex:1; margin-bottom:30px; }
+    #slide-10 .segment-card {
+      background-color: rgba(30,41,59,0.4);
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:16px;
+      padding:30px 20px;
+      display:flex; flex-direction:column; align-items:center; text-align:center;
+      transition: all 0.3s ease;
+      position:relative; overflow:hidden;
+    }
+    #slide-10 .segment-card:hover {
+      transform: translateY(-8px);
+      background-color: rgba(30,41,59,0.8);
+      border-color: rgba(255,255,255,0.15);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2), 0 10px 10px -5px rgba(0,0,0,0.1);
+    }
+    #slide-10 .card-top-bar { position:absolute; top:0; left:0; width:100%; height:4px; }
+    #slide-10 .bar-blue { background-color:#3b82f6; }
+    #slide-10 .bar-green { background-color:#10b981; }
+    #slide-10 .bar-purple { background-color:#a855f7; }
+    #slide-10 .bar-orange { background-color:#f97316; }
+    #slide-10 .icon-circle {
+      width:80px; height:80px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom:20px;
+      font-size:2rem;
+      position:relative;
+    }
+    #slide-10 .icon-blue { color:#60a5fa; background-color: rgba(59,130,246,0.1); }
+    #slide-10 .icon-green { color:#34d399; background-color: rgba(16,185,129,0.1); }
+    #slide-10 .icon-purple { color:#c084fc; background-color: rgba(168,85,247,0.1); }
+    #slide-10 .icon-orange { color:#fb923c; background-color: rgba(249,115,22,0.1); }
+    #slide-10 .card-title {
+      font-family:'Montserrat',sans-serif;
+      font-weight:700; color:#fff;
+      font-size:1.1rem;
+      margin-bottom:12px;
+      line-height:1.3;
+      min-height:44px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    #slide-10 .card-desc { color:#94a3b8; font-size:0.9rem; line-height:1.5; }
+    #slide-10 .requirements-bar {
+      background-color: rgba(15,23,42,0.6);
+      border:1px dashed rgba(255,255,255,0.15);
+      border-radius:12px;
+      padding:20px 40px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    #slide-10 .req-label {
+      display:flex; align-items:center;
+      color:#e2e8f0;
+      font-family:'Montserrat',sans-serif;
+      font-weight:700;
+      font-size:1rem;
+      margin-right:30px;
+      min-width:200px;
+    }
+    #slide-10 .req-list { display:flex; gap:40px; flex:1; justify-content:flex-end; }
+    #slide-10 .req-item { display:flex; align-items:center; color:#cbd5e1; font-size:0.95rem; }
+    #slide-10 .req-icon { color:#34d399; margin-right:10px; font-size:1.1rem; }
+    #slide-10 .corner-accent {
+      position:absolute; width:100px; height:100px;
+      border:2px solid rgba(255,255,255,0.05);
+      z-index:0;
+    }
+    #slide-10 .top-left { top:30px; left:30px; border-right:none; border-bottom:none; border-radius:20px 0 0 0; }
+    #slide-10 .bottom-right { bottom:30px; right:30px; border-left:none; border-top:none; border-radius:0 0 20px 0; }
+  </style>
+
+  <!-- =========================
+       SLIDE 11 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-11 .slide-container { display:flex; flex-direction:column; background:#0f172a; }
+    #slide-11 .bg-circle-1 {
+      position:absolute; top:-150px; left:-100px; width:600px; height:600px;
+      border-radius:50%;
+      background-color: rgba(30,58,138,0.25);
+      z-index:0;
+    }
+    #slide-11 .bg-circle-2 {
+      position:absolute; bottom:-200px; right:-100px; width:700px; height:700px;
+      border-radius:50%;
+      background-color: rgba(6,78,59,0.2);
+      z-index:0;
+    }
+    #slide-11 .grid-pattern {
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size:40px 40px;
+      z-index:0;
+      pointer-events:none;
+    }
+    #slide-11 .content-wrapper { position:relative; z-index:10; flex:1; padding:50px 80px; display:flex; flex-direction:column; }
+    #slide-11 .header-section { text-align:center; margin-bottom:40px; }
+    #slide-11 .cards-container { display:flex; justify-content:center; gap:40px; flex:1; align-items:stretch; }
+    #slide-11 .use-case-card {
+      flex:1;
+      background-color: rgba(30,41,59,0.6);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:20px;
+      overflow:hidden;
+      display:flex; flex-direction:column;
+      transition: all 0.4s ease;
+      position:relative;
+      backdrop-filter: blur(10px);
+    }
+    #slide-11 .use-case-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(59,130,246,0.4);
+      background-color: rgba(30,41,59,0.8);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    #slide-11 .card-visual {
+      height:180px;
+      background-color: rgba(15,23,42,0.6);
+      display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+    }
+    #slide-11 .mockup-insta {
+      width:140px; background-color:#1e293b;
+      border-radius:12px; padding:10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      transform: rotate(-5deg);
+      transition: transform 0.3s ease;
+    }
+    #slide-11 .use-case-card:hover .mockup-insta { transform: rotate(0deg) scale(1.05); }
+    #slide-11 .insta-header { display:flex; gap:8px; margin-bottom:10px; align-items:center; }
+    #slide-11 .insta-avatar { width:24px; height:24px; border-radius:50%; background-color:#64748b; }
+    #slide-11 .insta-lines { display:flex; flex-direction:column; gap:4px; }
+    #slide-11 .insta-line { height:4px; background-color:#475569; border-radius:2px; }
+    #slide-11 .insta-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:4px; }
+    #slide-11 .insta-post { aspect-ratio:1; background-color:#334155; border-radius:2px; }
+    #slide-11 .insta-post.highlight { background-color:#3b82f6; }
+    #slide-11 .mockup-post {
+      width:160px; background-color:#fff; border-radius:12px; padding:15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      transform: translateY(5px);
+      transition: transform 0.3s ease;
+      position:relative;
+    }
+    #slide-11 .use-case-card:hover .mockup-post { transform: translateY(0px) scale(1.05); }
+    #slide-11 .post-image {
+      height:80px; background-color:#d1fae5;
+      border-radius:8px; margin-bottom:10px;
+      display:flex; align-items:center; justify-content:center;
+      color:#059669;
+    }
+    #slide-11 .post-title-line { height:6px; width:80%; background-color:#e2e8f0; margin-bottom:6px; border-radius:3px; }
+    #slide-11 .post-text-line { height:4px; width:60%; background-color:#f1f5f9; border-radius:2px; }
+    #slide-11 .mockup-chat {
+      width:150px; display:flex; flex-direction:column; gap:10px;
+      transform: rotate(5deg);
+      transition: transform 0.3s ease;
+    }
+    #slide-11 .use-case-card:hover .mockup-chat { transform: rotate(0deg) scale(1.05); }
+    #slide-11 .chat-bubble { padding:8px 12px; border-radius:12px; font-size:8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); position:relative; }
+    #slide-11 .bubble-left { background-color:#334155; color:#cbd5e1; align-self:flex-start; border-bottom-left-radius:2px; width:80%; }
+    #slide-11 .bubble-right { background-color:#3b82f6; color:#fff; align-self:flex-end; border-bottom-right-radius:2px; width:85%; }
+    #slide-11 .card-body { padding:25px; flex:1; display:flex; flex-direction:column; }
+    #slide-11 .card-tag {
+      display:inline-block; font-size:0.7rem; font-weight:700;
+      text-transform:uppercase; letter-spacing:0.05em;
+      padding:4px 10px; border-radius:20px;
+      margin-bottom:15px; align-self:flex-start;
+    }
+    #slide-11 .tag-blue { background-color: rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.3); }
+    #slide-11 .tag-green { background-color: rgba(16,185,129,0.2); color:#34d399; border:1px solid rgba(16,185,129,0.3); }
+    #slide-11 .tag-purple { background-color: rgba(168,85,247,0.2); color:#c084fc; border:1px solid rgba(168,85,247,0.3); }
+    #slide-11 .card-title { color:#fff; font-size:1.25rem; font-weight:700; margin-bottom:12px; font-family:'Montserrat',sans-serif; }
+    #slide-11 .card-desc { color:#94a3b8; font-size:0.9rem; line-height:1.6; margin:0; flex:1; }
+    #slide-11 .card-footer {
+      margin-top:20px; padding-top:15px;
+      border-top:1px solid rgba(255,255,255,0.05);
+      display:flex; align-items:center;
+      font-size:0.8rem; color:#cbd5e1;
+    }
+    #slide-11 .check-icon { color:#34d399; margin-right:8px; }
+  </style>
+
+  <!-- =========================
+       SLIDE 12 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-12 .slide-container { display:flex; background:#0f172a; }
+    #slide-12 .bg-circle-1 {
+      position:absolute; top:-100px; left:-100px;
+      width:600px; height:600px;
+      border-radius:50%;
+      background-color: rgba(6,78,59,0.3);
+      filter: blur(80px);
+      z-index:0;
+    }
+    #slide-12 .bg-circle-2 {
+      position:absolute; bottom:-50px; right:-50px;
+      width:500px; height:500px;
+      border-radius:50%;
+      background-color: rgba(30,58,138,0.3);
+      filter: blur(80px);
+      z-index:0;
+    }
+    #slide-12 .content-wrapper {
+      position:relative; z-index:10;
+      width:100%; height:100%;
+      display:flex;
+      padding:60px 80px;
+    }
+    #slide-12 .left-panel { width:40%; display:flex; flex-direction:column; justify-content:center; padding-right:40px; }
+    #slide-12 .right-panel { width:60%; display:flex; flex-direction:column; justify-content:center; }
+    #slide-12 .decorative-line {
+      width:80px; height:6px; background-color:#34d399;
+      border-radius:4px; margin-bottom:30px;
+    }
+    #slide-12 .checklist-container { display:flex; flex-direction:column; gap:20px; }
+    #slide-12 .check-item {
+      display:flex; align-items:center;
+      background-color: rgba(30,41,59,0.5);
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:12px;
+      padding:20px;
+      transition: all 0.3s ease;
+    }
+    #slide-12 .check-item:hover {
+      background-color: rgba(30,41,59,0.8);
+      border-color: rgba(52,211,153,0.3);
+      transform: translateX(10px);
+      box-shadow: -5px 5px 15px rgba(0,0,0,0.2);
+    }
+    #slide-12 .icon-box {
+      width:56px; height:56px; border-radius:12px;
+      display:flex; align-items:center; justify-content:center;
+      margin-right:20px;
+      flex-shrink:0;
+      font-size:1.5rem;
+    }
+    #slide-12 .icon-ethics { background-color: rgba(16,185,129,0.15); color:#34d399; }
+    #slide-12 .icon-custom { background-color: rgba(59,130,246,0.15); color:#60a5fa; }
+    #slide-12 .icon-tools { background-color: rgba(251,146,60,0.15); color:#fb923c; }
+    #slide-12 .icon-speed { background-color: rgba(244,114,182,0.15); color:#f472b6; }
+    #slide-12 .icon-privacy { background-color: rgba(168,85,247,0.15); color:#c084fc; }
+    #slide-12 .item-title { font-family:'Montserrat',sans-serif; font-weight:700; color:#f8fafc; font-size:1.1rem; margin-bottom:4px; }
+    #slide-12 .item-desc { color:#94a3b8; font-size:0.9rem; line-height:1.4; margin:0; }
+    #slide-12 .check-mark {
+      margin-left:15px; color:#34d399;
+      opacity:0; transform: scale(0.5);
+      transition: all 0.3s ease;
+    }
+    #slide-12 .check-item:hover .check-mark { opacity:1; transform: scale(1); }
+    #slide-12 .visual-badge {
+      background-color: rgba(255,255,255,0.03);
+      border-radius:20px;
+      padding:30px;
+      border:1px solid rgba(255,255,255,0.05);
+      margin-top:40px;
+      position:relative;
+    }
+    #slide-12 .quote-icon {
+      position:absolute; top:-20px; left:20px;
+      font-size:3rem; color:#34d399;
+      background-color:#0f172a;
+      padding:0 10px;
+    }
+  </style>
+
+  <!-- =========================
+       SLIDE 13 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-13 .slide-container { display:flex; flex-direction:column; background:#0f172a; }
+    #slide-13 .bg-mesh {
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      z-index:0; opacity:0.4; background-color:#0f172a;
+    }
+    #slide-13 .orb-1 {
+      position:absolute; top:-100px; right:-100px;
+      width:600px; height:600px; background-color:#2563eb;
+      border-radius:50%; filter: blur(120px); opacity:0.3;
+    }
+    #slide-13 .orb-2 {
+      position:absolute; bottom:-100px; left:-100px;
+      width:700px; height:700px; background-color:#059669;
+      border-radius:50%; filter: blur(140px); opacity:0.25;
+    }
+    #slide-13 .geo-shape { position:absolute; border:2px solid rgba(255,255,255,0.05); z-index:1; }
+    #slide-13 .circle-lg {
+      width:500px; height:500px; border-radius:50%;
+      top:50%; left:50%; transform: translate(-50%, -50%);
+    }
+    #slide-13 .circle-md {
+      width:350px; height:350px; border-radius:50%;
+      top:50%; left:50%; transform: translate(-50%, -50%);
+      border-color: rgba(59,130,246,0.1);
+    }
+    #slide-13 .content-wrapper {
+      position:relative; z-index:10; flex:1;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      padding:60px; text-align:center;
+    }
+    #slide-13 .cta-card {
+      background-color: rgba(30,41,59,0.7);
+      backdrop-filter: blur(16px);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:30px;
+      padding:50px 80px;
+      max-width:900px; width:100%;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      position:relative; overflow:hidden;
+    }
+    #slide-13 .card-top-accent { position:absolute; top:0; left:0; width:100%; height:6px; background-color:#3b82f6; }
+    #slide-13 .headline {
+      font-size:3.5rem; line-height:1.1; margin-bottom:24px;
+      color:#fff; font-weight:800;
+    }
+    #slide-13 .subheadline {
+      font-size:1.25rem; color:#cbd5e1; margin-bottom:40px;
+      font-weight:300; max-width:700px; margin-left:auto; margin-right:auto;
+    }
+    #slide-13 .action-buttons { display:flex; gap:24px; justify-content:center; margin-bottom:40px; }
+    #slide-13 .btn-primary {
+      background-color:#2563eb; color:#fff;
+      padding:16px 32px; border-radius:12px;
+      font-family:'Montserrat',sans-serif;
+      font-weight:700; font-size:1.1rem;
+      display:flex; align-items:center;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 15px -3px rgba(37,99,235,0.3);
+      border:1px solid rgba(255,255,255,0.1);
+      cursor: default;
+    }
+    #slide-13 .btn-primary:hover { background-color:#1d4ed8; transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgba(37,99,235,0.4); }
+    #slide-13 .btn-secondary {
+      background-color: rgba(255,255,255,0.05); color:#e2e8f0;
+      padding:16px 32px; border-radius:12px;
+      font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.1rem;
+      display:flex; align-items:center;
+      border:1px solid rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+    #slide-13 .btn-secondary:hover { background-color: rgba(255,255,255,0.1); border-color:#fff; }
+    #slide-13 .bonus-tag {
+      display:inline-flex; align-items:center;
+      background-color: rgba(16,185,129,0.15);
+      border:1px solid rgba(16,185,129,0.3);
+      padding:8px 16px; border-radius:50px; margin-bottom:24px;
+    }
+    #slide-13 .bonus-text {
+      color:#34d399; font-weight:700; font-size:0.9rem;
+      text-transform:uppercase; letter-spacing:0.05em; margin:0;
+    }
+    #slide-13 .footer-info {
+      display:flex; justify-content:center; gap:40px;
+      color:#94a3b8; font-size:0.9rem;
+      border-top:1px solid rgba(255,255,255,0.1);
+      padding-top:24px; width:100%;
+    }
+    #slide-13 .info-item { display:flex; align-items:center; }
+    #slide-13 .info-icon { margin-right:8px; color:#60a5fa; }
+    #slide-13 .qr-placeholder {
+      position:absolute; right:-20px; bottom:-20px;
+      width:150px; height:150px;
+      background-color:#fff;
+      padding:10px; border-radius:12px;
+      transform: rotate(-5deg);
+      opacity:0.1;
+      pointer-events:none;
+    }
+  </style>
+
+  <!-- =========================
+       SLIDE 14 STYLES (scoped)
+  ========================== -->
+  <style>
+    #slide-14 .slide-container {
+      display:flex; flex-direction:column;
+      background:#0f172a;
+      justify-content:center; align-items:center;
+    }
+    #slide-14 .bg-circle-1 {
+      position:absolute; top:-150px; left:-150px;
+      width:600px; height:600px;
+      background-color: rgba(30,58,138,0.4);
+      border-radius:50%;
+      filter: blur(120px);
+      z-index:0;
+    }
+    #slide-14 .bg-circle-2 {
+      position:absolute; bottom:-150px; right:-150px;
+      width:700px; height:700px;
+      background-color: rgba(6,78,59,0.3);
+      border-radius:50%;
+      filter: blur(140px);
+      z-index:0;
+    }
+    #slide-14 .pattern-grid {
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size:30px 30px;
+      z-index:0; opacity:0.5;
+    }
+    #slide-14 .content-wrapper {
+      position:relative; z-index:10;
+      width:100%; max-width:900px;
+      text-align:center;
+      padding:40px;
+      display:flex; flex-direction:column; align-items:center;
+    }
+    #slide-14 .profile-container { margin-bottom:50px; }
+    #slide-14 .avatar-placeholder {
+      width:120px; height:120px;
+      background-color: rgba(30,41,59,0.8);
+      border:2px solid rgba(59,130,246,0.5);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      margin:0 auto 25px auto;
+      box-shadow: 0 0 30px rgba(59,130,246,0.2);
+    }
+    #slide-14 .name-text {
+      font-size:3rem; font-weight:800; color:#fff;
+      line-height:1.1; margin-bottom:10px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    #slide-14 .role-text {
+      font-size:1.25rem; color:#94a3b8;
+      font-weight:400; letter-spacing:0.05em;
+    }
+    #slide-14 .separator {
+      width:60px; height:4px; background-color:#34d399;
+      border-radius:2px; margin:30px auto;
+    }
+    #slide-14 .contact-grid {
+      display:flex; gap:30px; justify-content:center;
+      width:100%; margin-bottom:60px;
+    }
+    #slide-14 .contact-card {
+      background-color: rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.1);
+      padding:20px 40px;
+      border-radius:12px;
+      display:flex; align-items:center;
+      transition: all 0.3s ease;
+      min-width:300px;
+    }
+    #slide-14 .contact-card:hover {
+      background-color: rgba(255,255,255,0.08);
+      transform: translateY(-5px);
+      border-color: rgba(59,130,246,0.4);
+    }
+    #slide-14 .icon-circle {
+      width:48px; height:48px;
+      background-color: rgba(59,130,246,0.1);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      margin-right:20px;
+      color:#60a5fa;
+      font-size:1.2rem;
+    }
+    #slide-14 .contact-label {
+      font-size:0.75rem; color:#64748b;
+      text-transform:uppercase;
+      font-weight:700;
+      letter-spacing:0.1em;
+      margin-bottom:4px !important;
+    }
+    #slide-14 .contact-value {
+      font-size:1.1rem; color:#e2e8f0;
+      font-weight:600;
+      font-family:'Montserrat',sans-serif;
+    }
+    #slide-14 .ethical-note {
+      display:flex; align-items:center;
+      background-color: rgba(16,185,129,0.1);
+      border:1px solid rgba(16,185,129,0.2);
+      padding:12px 24px;
+      border-radius:50px;
+    }
+    #slide-14 .ethical-text { color:#a7f3d0; font-size:0.9rem; margin:0; }
+    /* =========================
+   FORZAR TEXTO CLARO GLOBAL
+   ========================= */
+body,
+.slide,
+.slide * {
+  color: #f8fafc; /* Blanco suave (no quema la vista) */
+}
+
+  </style>
+
+</head>
+
+<body>
+  <!-- Progress -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Fullscreen -->
+  <button class="fullscreen-btn" id="fullscreenBtn" title="Pantalla completa">
+    <i class="fas fa-expand"></i>
+  </button>
+
+  <!-- Hint teclado -->
+  <div class="keyboard-hint">
+    <i class="fas fa-keyboard mr-2"></i> Usa ← → o Espacio
+  </div>
+
+  <div class="stage">
+    <div class="presentation-container" id="presentationContainer">
+
+      <!-- SLIDE 1 -->
+      <div class="slide active" id="slide-1">
+        <div class="slide-container">
+          <img alt="Technology Background" class="bg-image" src="https://page.gensparksite.com/slides_images/c6d78c0544901493b454908f93ee85ac.webp"/>
+          <div class="bg-overlay"></div>
+          <div class="decor-circle-1"></div>
+          <div class="decor-circle-2"></div>
+          <div class="content-wrapper">
+            <div class="mb-8 animate-fade-in-up">
+              <div class="inline-flex items-center px-4 py-2 rounded-full border border-green-500 bg-green-900 bg-opacity-20">
+                <i class="fas fa-brain text-green-400 mr-2 text-sm"></i>
+                <p class="text-green-400 text-sm font-bold tracking-widest uppercase m-0">Consultoría Especializada</p>
+              </div>
+            </div>
+            <div class="mb-6 max-w-5xl">
+              <p class="title-font text-6xl font-extrabold text-white leading-tight m-0">
+                Potencia tu Consultorio de Psicología con <span class="highlight-text">Inteligencia Artificial</span>
+              </p>
+            </div>
+            <div class="mb-12 max-w-3xl">
+              <p class="text-2xl text-gray-300 font-light leading-relaxed m-0">
+                Estrategias de transformación digital y marketing ético diseñadas para fortalecer tu práctica clínica y conectar con más pacientes.
+              </p>
+            </div>
+            <div class="w-24 h-1.5 bg-green-500 rounded-full mb-12"></div>
+            <div class="glass-card px-10 py-6 flex items-center gap-8 shadow-2xl">
+              <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center border-2 border-blue-400">
+                <i class="fas fa-user-tie text-2xl text-white"></i>
+              </div>
+              <div class="text-left border-l-2 border-gray-600 pl-8">
+                <p class="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-1">Consultor a Cargo</p>
+                <p class="title-font text-2xl font-bold text-white mb-1">Santiago Cano Molina</p>
+                <p class="text-blue-300 text-base font-medium m-0 flex items-center">
+                  <i class="fas fa-microchip mr-2 text-xs"></i> Ingeniero Mecatrónico | Consultor en Ingeniería &amp; Tecnología Aplicada
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="absolute bottom-6 w-full text-center z-20">
+            <p class="text-gray-600 text-xs tracking-[0.3em] font-semibold m-0">COTIZACIÓN 2026 • SOLUCIONES DIGITALES HUMANIZADAS</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 -->
+      <div class="slide" id="slide-2">
+        <div class="slide-container">
+          <div class="decor-blob-1"></div>
+          <div class="decor-blob-2"></div>
+
+          <div class="left-col">
+            <div class="profile-image-container">
+              <img src="https://raw.githubusercontent.com/santiagocano298366/cotizacion-ia-psicologia/refs/heads/main/img/foto-santiago.png" alt="Santiago Cano Molina" class="profile-img">
+              <div class="img-overlay"></div>
+              <div class="absolute bottom-12 right-0 bg-slate-900 bg-opacity-95 px-8 py-4 rounded-l-xl border-l-4 border-green-500 shadow-2xl">
+                <p class="text-white font-bold text-xl m-0 title-font">Ing. Santiago Cano</p>
+                <p class="text-green-400 text-sm m-0">Consultor en Ingeniería &amp; Tecnología Aplicada</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-col">
+            <div class="mb-10">
+              <div class="flex items-center mb-4">
+                <span class="h-0.5 w-12 bg-blue-500 mr-4"></span>
+                <p class="text-blue-400 font-bold tracking-widest uppercase text-sm m-0">Sobre el Consultor</p>
+              </div>
+              <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0">
+                Experiencia Técnica con <br/>
+                <span class="accent-text">Enfoque Humano</span>
+              </h1>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <div class="glass-box">
+                <div class="icon-box">
+                  <i class="fas fa-robot text-green-400 text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Experiencia Aplicada</h3>
+                  <p class="secondary-text text-sm m-0 leading-relaxed">
+                    Trayectoria en la implementación práctica de herramientas de Inteligencia Artificial, optimizando procesos reales.
+                  </p>
+                </div>
+              </div>
+
+              <div class="glass-box">
+                <div class="icon-box">
+                  <i class="fas fa-hands-holding-circle text-blue-400 text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Enfoque Ético y Psicológico</h3>
+                  <p class="secondary-text text-sm m-0 leading-relaxed">
+                    La tecnología es el medio, no el fin. Estrategias alineadas con las necesidades del cliente.
+                  </p>
+                </div>
+              </div>
+
+              <div class="glass-box">
+                <div class="icon-box">
+                  <i class="fas fa-chalkboard-user text-purple-400 text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Dinámica de Trabajo</h3>
+                  <p class="secondary-text text-sm m-0 leading-relaxed">
+                    Metodología de taller guiado con ejemplos reales y ejercicios prácticos. No solo teoría, sino herramientas listas para usar mañana mismo.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-700">
+              <p class="text-slate-500 text-xs italic m-0">
+                <i class="fas fa-quote-left mr-2 text-slate-600"></i>
+                Mi objetivo es que la tecnología trabaje para ti, permitiéndote enfocarte en lo que mejor sabes hacer: ayudar a tus pacientes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3 -->
+      <div class="slide" id="slide-3">
+        <div class="slide-container">
+          <div class="decor-circle-1"></div>
+          <div class="decor-circle-2"></div>
+
+          <div class="content-container">
+            <div class="left-panel">
+              <div class="mb-6">
+                <div class="inline-flex items-center px-3 py-1 rounded-full border border-red-500 bg-red-900 bg-opacity-20 mb-4">
+                  <i class="fas fa-triangle-exclamation text-red-400 mr-2 text-xs"></i>
+                  <p class="text-red-400 text-xs font-bold tracking-widest uppercase m-0">Diagnóstico Inicial</p>
+                </div>
+
+                <h1 class="title-font text-5xl font-extrabold text-white leading-tight mb-6">
+                  Desafíos <br/>
+                  <span class="text-red-400">Frecuentes</span>
+                </h1>
+
+                <div class="w-20 h-1.5 bg-red-500 rounded-full mb-8"></div>
+
+                <p class="text-slate-300 text-lg leading-relaxed font-light mb-8">
+                  Muchos profesionales de la salud mental se encuentran atrapados entre la necesidad de digitalizarse y la falta de herramientas adecuadas para hacerlo sin perder su esencia profesional.
+                </p>
+              </div>
+
+              <div class="bg-slate-800 bg-opacity-50 p-6 rounded-xl border border-slate-700">
+                <div class="flex items-center justify-between mb-2">
+                  <p class="text-slate-400 text-sm font-semibold m-0">Tendencia de Mercado</p>
+                  <i class="fas fa-chart-line text-slate-500"></i>
+                </div>
+                <p class="text-white text-4xl font-bold title-font m-0 mb-1">85%</p>
+                <p class="text-slate-400 text-xs m-0">de los pacientes buscan referencias online antes de agendar su primera cita.</p>
+              </div>
+            </div>
+
+            <div class="right-panel">
+              <div class="problem-card">
+                <div class="icon-wrapper icon-time">
+                  <i class="fas fa-hourglass-half text-lg"></i>
+                </div>
+                <div>
+                  <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Escasez de Tiempo</h3>
+                  <p class="text-slate-400 text-sm m-0">La carga clínica diaria impide mantener una constancia real en la creación de contenido digital relevante.</p>
+                </div>
+              </div>
+
+              <div class="problem-card">
+                <div class="icon-wrapper icon-empathy">
+                  <i class="fas fa-pen-nib text-lg"></i>
+                </div>
+                <div>
+                  <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Bloqueo Creativo y Empático</h3>
+                  <p class="text-slate-400 text-sm m-0">Dificultad para traducir conceptos clínicos complejos a un lenguaje cercano sin perder profesionalismo.</p>
+                </div>
+              </div>
+
+              <div class="problem-card">
+                <div class="icon-wrapper icon-visibility">
+                  <i class="fas fa-ghost text-lg"></i>
+                </div>
+                <div>
+                  <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Invisibilidad Digital</h3>
+                  <p class="text-slate-400 text-sm m-0">Contenido valioso que se pierde en el algoritmo por falta de una estrategia visual y de copy clara.</p>
+                </div>
+              </div>
+
+              <div class="problem-card">
+                <div class="icon-wrapper icon-org">
+                  <i class="fas fa-shuffle text-lg"></i>
+                </div>
+                <div>
+                  <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Gestión Desorganizada</h3>
+                  <p class="text-slate-400 text-sm m-0">Publicaciones esporádicas sin una parrilla o calendario que sustente objetivos a largo plazo.</p>
+                </div>
+              </div>
+
+              <div class="problem-card">
+                <div class="icon-wrapper icon-ethics">
+                  <i class="fas fa-robot text-lg"></i>
+                </div>
+                <div>
+                  <h3 class="text-white font-bold text-lg m-0 mb-1 title-font">Riesgos Éticos con IA</h3>
+                  <p class="text-slate-400 text-sm m-0">Incertidumbre sobre cómo usar herramientas automáticas sin comprometer la calidad humana.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SLIDE 4 -->
+      <div class="slide" id="slide-4">
+        <div class="slide-container">
+          <div class="glow-spot-1"></div>
+          <div class="glow-spot-2"></div>
+
+          <div class="left-col">
+            <div class="mb-8">
+              <div class="inline-flex items-center px-4 py-2 rounded-full border border-blue-500 bg-blue-900 bg-opacity-20 mb-6">
+                <i class="fas fa-lightbulb text-blue-400 mr-2 text-sm"></i>
+                <p class="text-blue-400 text-sm font-bold tracking-widest uppercase m-0">La Solución Integral</p>
+              </div>
+
+              <h1 class="title-font text-5xl font-extrabold text-white leading-tight mb-6">
+                Estructura tu Marketing con <br/>
+                <span class="highlight-text">IA Ética</span>
+              </h1>
+
+              <p class="sub-text text-lg leading-relaxed font-light mb-8">
+                Una consultoría intensiva y práctica diseñada para transformar la gestión digital de tu consultorio en solo 2 horas, eliminando la carga operativa sin sacrificar la calidad humana.
+              </p>
+            </div>
+
+            <div class="relative w-full h-48 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
+              <img alt="Human AI Collaboration" class="w-full h-full object-cover opacity-60" src="https://page.gensparksite.com/slides_images/49403d7e47bbdc18d9c262bf7ccff0d3.webp"/>
+              <div class="absolute inset-0 bg-slate-900 bg-opacity-40 flex flex-col justify-center items-center">
+                <i class="fas fa-infinity text-5xl text-white mb-2 shadow-lg"></i>
+                <p class="text-white font-semibold tracking-wider m-0">Sinergia Profesional</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-col">
+            <div class="vertical-separator"></div>
+
+            <div class="feature-card">
+              <div class="feature-icon-box">
+                <i class="fas fa-clock text-2xl text-green-400"></i>
+              </div>
+              <div>
+                <h3 class="title-font text-xl font-bold white-text mb-2 m-0">Más Contenido, Menos Tiempo</h3>
+                <p class="sub-text text-sm m-0 leading-relaxed">
+                  Aprende a generar ideas y redacciones base en minutos, liberando horas de tu semana para enfocarte en la atención clínica de tus pacientes.
+                </p>
+              </div>
+            </div>
+
+            <div class="feature-card" style="border-color: rgba(59, 130, 246, 0.3);">
+              <div class="feature-icon-box" style="background-color: rgba(59, 130, 246, 0.1);">
+                <i class="fas fa-user-doctor text-2xl text-blue-400"></i>
+              </div>
+              <div>
+                <h3 class="title-font text-xl font-bold white-text mb-2 m-0">Coherencia Profesional</h3>
+                <p class="sub-text text-sm m-0 leading-relaxed">
+                  Desarrollamos una "voz digital" que respeta tu tono terapéutico, evitando mensajes genéricos o sensacionalistas típicos de las redes.
+                </p>
+              </div>
+            </div>
+
+            <div class="feature-card" style="border-color: rgba(168, 85, 247, 0.3);">
+              <div class="feature-icon-box" style="background-color: rgba(168, 85, 247, 0.1);">
+                <i class="fas fa-wand-magic-sparkles text-2xl text-purple-400"></i>
+              </div>
+              <div>
+                <h3 class="title-font text-xl font-bold white-text mb-2 m-0">Prompts Personalizados</h3>
+                <p class="sub-text text-sm m-0 leading-relaxed">
+                  No te damos fórmulas genéricas. Creamos instrucciones específicas para tu nicho (ej. ansiedad, terapia infantil) listas para copiar y pegar.
+                </p>
+              </div>
+            </div>
+
+            <div class="result-box">
+              <div>
+                <p class="text-blue-400 text-xs font-bold uppercase tracking-wider mb-1 m-0">Resultado Tangible</p>
+                <p class="text-white font-semibold text-sm m-0">Parrilla mensual aplicable desde mañana</p>
+              </div>
+              <i class="fas fa-arrow-right text-blue-400 text-xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 5 -->
+      <div class="slide" id="slide-5">
+        <div class="slide-container">
+          <div class="bg-shape-1"></div>
+          <div class="bg-shape-2"></div>
+          <div class="dots-pattern"></div>
+
+          <div class="content-wrapper">
+            <div class="header-section">
+              <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-slate-600 bg-slate-800 bg-opacity-50 mb-4">
+                <p class="text-slate-300 text-xs font-bold tracking-[0.2em] uppercase m-0">Alcance del Servicio</p>
+              </div>
+              <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0">
+                ¿Qué Incluye la <span class="text-green-400">Consultoría</span>?
+              </h1>
+              <div class="w-24 h-1 bg-green-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="items-grid">
+              <div class="item-card">
+                <div class="icon-container bg-blue"><i class="fas fa-magnifying-glass-chart text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Diagnóstico Digital Express</p>
+                  <p class="item-desc">Revisión rápida del estado actual de tus redes y presencia online para identificar oportunidades inmediatas de mejora.</p>
+                </div>
+              </div>
+
+              <div class="item-card">
+                <div class="icon-container bg-green"><i class="fas fa-chalkboard-user text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Capacitación Práctica en IA</p>
+                  <p class="item-desc">Entrenamiento "manos a la obra" para generar ideas, textos persuasivos y gestionar tu comunidad usando inteligencia artificial.</p>
+                </div>
+              </div>
+
+              <div class="item-card">
+                <div class="icon-container bg-purple"><i class="fas fa-wand-magic-sparkles text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Prompts Personalizados</p>
+                  <p class="item-desc">Entrega de instrucciones pre-diseñadas y adaptadas a tu nicho para crear posts educativos y mensajes empáticos al instante.</p>
+                </div>
+              </div>
+
+              <div class="item-card">
+                <div class="icon-container bg-pink"><i class="fas fa-photo-film text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Herramientas Visuales</p>
+                  <p class="item-desc">Introducción a plataformas de IA (ej. Canva Magic) para diseñar imágenes profesionales y videos cortos sin ser diseñador.</p>
+                </div>
+              </div>
+
+              <div class="item-card">
+                <div class="icon-container bg-orange"><i class="fas fa-calendar-days text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Parrilla de Contenido Base</p>
+                  <p class="item-desc">Construcción de un calendario mensual básico y sostenible que organiza tus publicaciones estratégicamente.</p>
+                </div>
+              </div>
+
+              <div class="item-card">
+                <div class="icon-container bg-teal"><i class="fas fa-shield-heart text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Ética y Buenas Prácticas</p>
+                  <p class="item-desc">Guía fundamental sobre cómo mantener la confidencialidad, el tono humano y los límites profesionales al usar tecnología.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 6 -->
+      <div class="slide" id="slide-6">
+        <div class="slide-container">
+          <div class="bg-shape-1"></div>
+          <div class="bg-shape-2"></div>
+          <div class="dots-pattern"></div>
+
+          <div class="content-wrapper">
+            <div class="header-section">
+              <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-slate-600 bg-slate-800 bg-opacity-50 mb-4">
+                <p class="text-slate-300 text-xs font-bold tracking-[0.2em] uppercase m-0">Resultados Tangibles</p>
+              </div>
+              <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0">
+                Beneficios <span class="text-blue-400">Concretos</span>
+              </h1>
+              <div class="w-24 h-1 bg-blue-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="items-grid">
+              <div class="item-card">
+                <div class="icon-container bg-blue"><i class="fas fa-clock text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Ahorro de Tiempo</p>
+                  <p class="item-desc">Optimización drástica de tareas repetitivas, permitiendo al equipo enfocarse más en los pacientes y menos en la pantalla.</p>
+                </div>
+              </div>
+
+              <div class="item-card">
+                <div class="icon-container bg-green"><i class="fas fa-calendar-check text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Mayor Consistencia</p>
+                  <p class="item-desc">Publicaciones regulares y estratégicas que mantienen activa la presencia digital sin depender de la "inspiración" diaria.</p>
+                </div>
+              </div>
+
+              <div class="item-card">
+                <div class="icon-container bg-pink"><i class="fas fa-hand-holding-heart text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Mensajes Empáticos</p>
+                  <p class="item-desc">Contenido redactado con tono profesional y humano, alineado perfectamente con la sensibilidad que requiere la psicología.</p>
+                </div>
+              </div>
+
+              <div class="item-card">
+                <div class="icon-container bg-purple"><i class="fas fa-rocket text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Mejor Alcance y Engagement</p>
+                  <p class="item-desc">Estrategias diseñadas para conectar mejor con la audiencia, aumentando la visibilidad y la interacción en redes sociales.</p>
+                </div>
+              </div>
+
+              <div class="item-card">
+                <div class="icon-container bg-orange"><i class="fas fa-users-gear text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Autonomía del Equipo</p>
+                  <p class="item-desc">Procesos simples y herramientas fáciles de usar que empoderan al equipo administrativo para gestionar el marketing internamente.</p>
+                </div>
+              </div>
+
+              <div class="item-card">
+                <div class="icon-container bg-teal"><i class="fas fa-user-shield text-2xl"></i></div>
+                <div class="item-content">
+                  <p class="item-title">Uso Responsable de IA</p>
+                  <p class="item-desc">Aplicación de tecnología bajo estrictos criterios éticos, asegurando la calidad y la veracidad de la información compartida.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 7 -->
+      <div class="slide" id="slide-7">
+        <div class="slide-container">
+          <div class="glow-bg-1"></div>
+          <div class="glow-bg-2"></div>
+
+          <div class="content-wrapper">
+            <div class="text-center mb-8">
+              <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-500 bg-blue-900 bg-opacity-20 mb-4">
+                <i class="fas fa-list-check text-blue-400 mr-2 text-xs"></i>
+                <p class="text-blue-400 text-xs font-bold tracking-[0.2em] uppercase m-0">Proceso Estructurado</p>
+              </div>
+              <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0">
+                Metodología de <span class="text-blue-400">Trabajo</span>
+              </h1>
+              <p class="text-slate-400 mt-4 text-lg font-light max-w-3xl mx-auto m-0">
+                Una sesión intensiva de 2 horas diseñada para pasar de la teoría a la práctica de inmediato.
+              </p>
+            </div>
+
+            <div class="timeline-container">
+              <div class="timeline-line"></div>
+              <div class="timeline-progress" style="background-color: rgba(59, 130, 246, 0.3);"></div>
+
+              <div class="steps-wrapper">
+                <div class="step-item">
+                  <div class="time-badge">10 min</div>
+                  <div class="step-node node-1">
+                    <div class="step-number">1</div>
+                    <i class="fas fa-clipboard-list text-2xl"></i>
+                  </div>
+                  <div class="step-content">
+                    <p class="step-title">Briefing Inicial</p>
+                    <p class="step-desc">Alineación rápida de objetivos, definición de audiencia y tono de comunicación.</p>
+                  </div>
+                </div>
+
+                <div class="step-item">
+                  <div class="time-badge">15 min</div>
+                  <div class="step-node node-2">
+                    <div class="step-number">2</div>
+                    <i class="fas fa-magnifying-glass-chart text-2xl"></i>
+                  </div>
+                  <div class="step-content">
+                    <p class="step-title">Diagnóstico Express</p>
+                    <p class="step-desc">Revisión de redes actuales e identificación de oportunidades de mejora inmediatas.</p>
+                  </div>
+                </div>
+
+                <div class="step-item">
+                  <div class="time-badge">35 min</div>
+                  <div class="step-node node-3">
+                    <div class="step-number">3</div>
+                    <i class="fas fa-wand-magic-sparkles text-2xl"></i>
+                  </div>
+                  <div class="step-content">
+                    <p class="step-title">Co-creación de Prompts</p>
+                    <p class="step-desc">Desarrollo de instrucciones personalizadas para generar contenido relevante.</p>
+                  </div>
+                </div>
+
+                <div class="step-item">
+                  <div class="time-badge">45 min</div>
+                  <div class="step-node node-4">
+                    <div class="step-number">4</div>
+                    <i class="fas fa-laptop-code text-2xl"></i>
+                  </div>
+                  <div class="step-content">
+                    <p class="step-title">Taller Práctico</p>
+                    <p class="step-desc">Manos a la obra: creación de textos, imágenes y vídeos cortos usando IA.</p>
+                  </div>
+                </div>
+
+                <div class="step-item">
+                  <div class="time-badge">15 min</div>
+                  <div class="step-node node-5">
+                    <div class="step-number">5</div>
+                    <i class="fas fa-flag-checkered text-2xl"></i>
+                  </div>
+                  <div class="step-content">
+                    <p class="step-title">Cierre y Acción</p>
+                    <p class="step-desc">Entrega de la parrilla base y definición del plan de acción para los próximos 30 días.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center mt-10">
+              <div class="inline-block px-6 py-2 rounded-lg bg-slate-800 border border-slate-700">
+                <p class="text-slate-400 text-sm m-0">
+                  <i class="fas fa-clock mr-2 text-green-400"></i>
+                  Duración Total Estimada: <span class="text-white font-bold">2 Horas</span>
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 8 -->
+      <div class="slide" id="slide-8">
+        <div class="slide-container">
+          <div class="accent-blob-1"></div>
+          <div class="accent-blob-2"></div>
+
+          <div class="content-wrapper">
+            <div class="header">
+              <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-500 bg-blue-900 bg-opacity-20 mb-4">
+                <i class="fas fa-box-open text-blue-400 mr-2 text-sm"></i>
+                <p class="text-blue-400 text-xs font-bold tracking-widest uppercase m-0">Materiales Incluidos</p>
+              </div>
+              <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0">
+                Entregables <span class="text-blue-400">Tangibles</span>
+              </h1>
+              <p class="text-slate-400 mt-4 text-lg max-w-3xl mx-auto m-0">
+                No solo te llevas conocimientos, te llevas herramientas listas para implementar inmediatamente.
+              </p>
+            </div>
+
+            <div class="deliverables-grid">
+              <div class="deliverable-card">
+                <div class="card-accent"></div>
+                <i class="fas fa-terminal watermark-icon"></i>
+                <div class="icon-box icon-prompts"><i class="fas fa-terminal"></i></div>
+                <div class="card-content">
+                  <div class="tag-pill tag-prompts">Documento Editable</div>
+                  <h3 class="card-title m-0">Prompts Personalizados</h3>
+                  <p class="card-desc m-0">
+                    Una biblioteca de instrucciones de IA adaptadas a tu especialidad (ej. TCC, Infantil), listas para copiar, pegar y generar contenido.
+                  </p>
+                </div>
+              </div>
+
+              <div class="deliverable-card">
+                <div class="card-accent"></div>
+                <i class="fas fa-images watermark-icon"></i>
+                <div class="icon-box icon-examples"><i class="fas fa-images"></i></div>
+                <div class="card-content">
+                  <div class="tag-pill tag-examples">Material Visual</div>
+                  <h3 class="card-title m-0">Pack de Ejemplos</h3>
+                  <p class="card-desc m-0">
+                    Las piezas gráficas y textos que creemos juntos durante la sesión, listos para ser tu primera semana de contenido real.
+                  </p>
+                </div>
+              </div>
+
+              <div class="deliverable-card">
+                <div class="card-accent"></div>
+                <i class="fas fa-table watermark-icon"></i>
+                <div class="icon-box icon-calendar"><i class="fas fa-table"></i></div>
+                <div class="card-content">
+                  <div class="tag-pill tag-calendar">Plantilla Excel / Sheets</div>
+                  <h3 class="card-title m-0">Parrilla de Contenido</h3>
+                  <p class="card-desc m-0">
+                    Estructura base mensual para organizar tus ideas, definir frecuencias y mantener la constancia sin agobiarte.
+                  </p>
+                </div>
+              </div>
+
+              <div class="deliverable-card">
+                <div class="card-accent"></div>
+                <i class="fas fa-book-medical watermark-icon"></i>
+                <div class="icon-box icon-guide"><i class="fas fa-book-medical"></i></div>
+                <div class="card-content">
+                  <div class="tag-pill tag-guide">PDF Exclusivo</div>
+                  <h3 class="card-title m-0">Guía de Ética &amp; IA</h3>
+                  <p class="card-desc m-0">
+                    Manual de buenas prácticas para usar inteligencia artificial respetando la confidencialidad y el código deontológico.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 9 -->
+      <div class="slide" id="slide-9">
+        <div class="slide-container">
+          <div class="spotlight-effect"></div>
+          <div class="accent-glow"></div>
+
+          <div class="content-wrapper">
+            <div class="left-panel">
+              <div class="mb-8">
+                <p class="text-blue-400 font-bold tracking-widest uppercase text-sm mb-2">Propuesta de Valor</p>
+                <h1 class="title-font text-5xl font-extrabold text-white leading-tight mb-6">
+                  Inversión <br/>
+                  <span class="text-green-400">Estratégica</span>
+                </h1>
+                <p class="text-slate-300 text-lg leading-relaxed font-light mb-0">
+                  Esta consultoría no es un gasto operativo, es una herramienta de productividad. El objetivo es que recuperes la inversión en tu primer mes ahorrando horas de trabajo administrativo.
+                </p>
+              </div>
+
+              <div class="roi-box">
+                <div class="flex items-center mb-3">
+                  <i class="fas fa-chart-pie text-blue-400 text-xl mr-3"></i>
+                  <p class="text-white font-bold text-lg m-0 title-font">Retorno de Inversión</p>
+                </div>
+                <p class="text-slate-400 text-sm m-0 leading-relaxed">
+                  Al automatizar la creación de contenido base, liberas entre <strong>4 a 6 horas mensuales</strong> que puedes dedicar a consultas con pacientes, generando ingresos directos.
+                </p>
+              </div>
+
+              <div class="mt-12">
+                <p class="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-4">Medios de Pago Disponibles</p>
+                <div class="flex flex-wrap gap-2">
+                  <div class="payment-pill"><i class="fas fa-building-columns mr-2 text-slate-400"></i> Transferencia</div>
+                  <div class="payment-pill"><i class="fas fa-mobile-screen mr-2 text-slate-400"></i> Nequi</div>
+                  <div class="payment-pill"><i class="fas fa-wallet mr-2 text-slate-400"></i> Daviplata</div>
+                </div>
+                <p class="text-slate-600 text-xs mt-6 italic">
+                  * Esta cotización tiene una validez de 15 días calendario a partir de su emisión.
+                </p>
+              </div>
+            </div>
+
+            <div class="right-panel">
+              <div class="pricing-card">
+                <div class="flex justify-between items-start mb-6">
+                  <div>
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-wider m-0 mb-1">Paquete Completo</p>
+                    <p class="text-white font-bold text-xl m-0 title-font">Consultoría IA + Marketing</p>
+                  </div>
+                  <div class="bg-green-900 bg-opacity-30 border border-green-500 text-green-400 px-3 py-1 rounded-full text-xs font-bold">
+                    Todo Incluido
+                  </div>
+                </div>
+
+                <div class="mb-8 border-b border-slate-700 pb-8">
+                  <p class="m-0">
+                    <span class="currency">$</span>
+                    <span class="price-tag">200.000</span>
+                    <span class="cop-text">COP</span>
+                  </p>
+                  <p class="text-slate-400 text-sm mt-2 m-0 flex items-center">
+                    <i class="far fa-clock mr-2 text-blue-400"></i> Duración: 2 Horas
+                  </p>
+                  <p class="text-slate-400 text-sm mt-1 m-0 flex items-center">
+                    <i class="fas fa-video mr-2 text-blue-400"></i> Modalidad: Presencial o Virtual
+                  </p>
+                </div>
+
+                <div class="feature-list">
+                  <div class="feature-item"><i class="fas fa-check-circle check-icon"></i><p class="m-0">Diagnóstico digital inicial</p></div>
+                  <div class="feature-item"><i class="fas fa-check-circle check-icon"></i><p class="m-0">Taller práctico de IA y prompts</p></div>
+                  <div class="feature-item"><i class="fas fa-check-circle check-icon"></i><p class="m-0">Parrilla de contenido mensual</p></div>
+                  <div class="feature-item"><i class="fas fa-check-circle check-icon"></i><p class="m-0">Materiales y entregables editables</p></div>
+                </div>
+
+                <div class="mt-4 text-center">
+                  <div class="bg-blue-600 hover:bg-blue-500 transition-colors text-white font-bold py-3 px-6 rounded-lg w-full flex items-center justify-center">
+                    <span class="mr-2">Asegurar Tarifa</span>
+                    <i class="fas fa-arrow-right text-sm"></i>
+                  </div>
+                  <p class="text-slate-500 text-xs mt-3 m-0">Sin costos ocultos ni mensualidades obligatorias.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 10 -->
+      <div class="slide" id="slide-10">
+        <div class="slide-container">
+          <div class="bg-shape-1"></div>
+          <div class="bg-shape-2"></div>
+          <div class="bg-accent-blob"></div>
+          <div class="corner-accent top-left"></div>
+          <div class="corner-accent bottom-right"></div>
+
+          <div class="content-wrapper">
+            <div class="header-section">
+              <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-purple-500 bg-purple-900 bg-opacity-20 mb-4">
+                <i class="fas fa-bullseye text-purple-400 mr-2 text-xs"></i>
+                <p class="text-purple-300 text-xs font-bold tracking-[0.2em] uppercase m-0">Perfil del Cliente Ideal</p>
+              </div>
+              <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0">
+                ¿Para Quién es este <span class="text-purple-400">Servicio</span>?
+              </h1>
+              <p class="text-slate-400 mt-4 text-lg font-light max-w-3xl mx-auto m-0">
+                Diseñado específicamente para profesionales de la salud mental que desean crecer sin sacrificar su ética profesional.
+              </p>
+            </div>
+
+            <div class="segments-container">
+              <div class="segment-card">
+                <div class="card-top-bar bar-blue"></div>
+                <div class="icon-circle icon-blue"><i class="fas fa-hospital-user"></i></div>
+                <h3 class="card-title m-0">Consultorios y Clínicas</h3>
+                <p class="card-desc m-0">Equipos pequeños o medianos que buscan sistematizar su captación de pacientes y mejorar su imagen corporativa.</p>
+              </div>
+
+              <div class="segment-card">
+                <div class="card-top-bar bar-green"></div>
+                <div class="icon-circle icon-green"><i class="fas fa-user-md"></i></div>
+                <h3 class="card-title m-0">Psicólogos Independientes</h3>
+                <p class="card-desc m-0">Profesionales autónomos que gestionan su propia marca y necesitan optimizar su limitado tiempo administrativo.</p>
+              </div>
+
+              <div class="segment-card">
+                <div class="card-top-bar bar-purple"></div>
+                <div class="icon-circle icon-purple"><i class="fas fa-people-roof"></i></div>
+                <h3 class="card-title m-0">Centros de Terapia</h3>
+                <p class="card-desc m-0">Especialistas en terapia infantil, de pareja o familiar que requieren una comunicación sensible y educativa.</p>
+              </div>
+
+              <div class="segment-card">
+                <div class="card-top-bar bar-orange"></div>
+                <div class="icon-circle icon-orange"><i class="fas fa-heart-pulse"></i></div>
+                <h3 class="card-title m-0">Organizaciones de Salud</h3>
+                <p class="card-desc m-0">Entidades que ofrecen servicios de salud mental y bienestar que desean profesionalizar su marketing digital.</p>
+              </div>
+            </div>
+
+            <div class="requirements-bar">
+              <div class="req-label">
+                <i class="fas fa-triangle-exclamation text-yellow-500 mr-3 text-xl"></i>
+                <span class="m-0">Requisitos Básicos</span>
+              </div>
+              <div class="req-list">
+                <div class="req-item"><i class="fas fa-wifi req-icon"></i><p class="m-0">Acceso estable a Internet</p></div>
+                <div class="req-item"><i class="fab fa-instagram req-icon"></i><p class="m-0">Cuentas de Redes Activas</p></div>
+                <div class="req-item"><i class="fas fa-laptop req-icon"></i><p class="m-0">1 Dispositivo por Participante</p></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 11 -->
+      <div class="slide" id="slide-11">
+        <div class="slide-container">
+          <div class="bg-circle-1"></div>
+          <div class="bg-circle-2"></div>
+          <div class="grid-pattern"></div>
+
+          <div class="content-wrapper">
+            <div class="header-section">
+              <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-500 bg-blue-900 bg-opacity-20 mb-4">
+                <i class="fas fa-briefcase text-blue-400 mr-2 text-xs"></i>
+                <p class="text-blue-400 text-xs font-bold tracking-[0.2em] uppercase m-0">Aplicación Real</p>
+              </div>
+              <h1 class="title-font text-5xl font-extrabold text-white leading-tight m-0">
+                Casos de Uso <span class="text-green-400">Prácticos</span>
+              </h1>
+              <p class="text-slate-400 mt-4 text-lg font-light max-w-3xl mx-auto m-0">
+                Ejemplos tangibles de lo que lograremos construir juntos durante la sesión de 2 horas.
+              </p>
+            </div>
+
+            <div class="cards-container">
+              <div class="use-case-card">
+                <div class="card-visual">
+                  <div class="mockup-insta">
+                    <div class="insta-header">
+                      <div class="insta-avatar"></div>
+                      <div class="insta-lines">
+                        <div class="insta-line" style="width: 40px;"></div>
+                        <div class="insta-line" style="width: 25px;"></div>
+                      </div>
+                    </div>
+                    <div class="insta-grid">
+                      <div class="insta-post highlight"></div>
+                      <div class="insta-post"></div>
+                      <div class="insta-post"></div>
+                      <div class="insta-post"></div>
+                      <div class="insta-post highlight"></div>
+                      <div class="insta-post"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-tag tag-blue">Visibilidad</div>
+                  <h3 class="card-title m-0">Plan Mensual de Instagram</h3>
+                  <p class="card-desc m-0">
+                    Diseño de una grilla estratégica con <strong>4 a 8 posts educativos</strong> y 4 historias interactivas. Equilibrio entre marca personal y contenido de valor.
+                  </p>
+                  <div class="card-footer">
+                    <i class="fas fa-check-circle check-icon"></i>
+                    <span>Listo para publicar</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="use-case-card">
+                <div class="card-visual">
+                  <div class="mockup-post">
+                    <div class="post-image"><i class="fas fa-brain text-2xl"></i></div>
+                    <div class="post-title-line"></div>
+                    <div class="post-text-line"></div>
+                    <div class="post-text-line" style="width: 40%;"></div>
+                    <div class="absolute -right-2 -bottom-2 bg-green-500 rounded-full w-8 h-8 flex items-center justify-center text-white text-xs border-2 border-white shadow">
+                      <i class="fas fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-tag tag-green">Educación</div>
+                  <h3 class="card-title m-0">Campaña Psicoeducativa</h3>
+                  <p class="card-desc m-0">
+                    Serie de contenidos enfocada en <strong>Ansiedad y Estrés</strong>. Utiliza lenguaje empático y desestigmatizante para educar a pacientes potenciales.
+                  </p>
+                  <div class="card-footer">
+                    <i class="fas fa-check-circle check-icon"></i>
+                    <span>Formato carrusel o reel</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="use-case-card">
+                <div class="card-visual">
+                  <div class="mockup-chat">
+                    <div class="bubble-left chat-bubble">
+                      <div class="w-full h-1 bg-slate-400 rounded mb-1"></div>
+                      <div class="w-2/3 h-1 bg-slate-400 rounded"></div>
+                    </div>
+                    <div class="bubble-right chat-bubble">
+                      <div class="w-full h-1 bg-blue-100 rounded mb-1"></div>
+                      <div class="w-full h-1 bg-blue-100 rounded mb-1"></div>
+                      <div class="w-1/2 h-1 bg-blue-100 rounded"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-tag tag-purple">Gestión</div>
+                  <h3 class="card-title m-0">Protocolo de Respuestas</h3>
+                  <p class="card-desc m-0">
+                    Scripts predefinidos para responder mensajes de pacientes. Claridad en horarios, precios y límites, manteniendo la calidez humana.
+                  </p>
+                  <div class="card-footer">
+                    <i class="fas fa-check-circle check-icon"></i>
+                    <span>Para WhatsApp y DM</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 12 -->
+      <div class="slide" id="slide-12">
+        <div class="slide-container">
+          <div class="bg-circle-1"></div>
+          <div class="bg-circle-2"></div>
+
+          <div class="content-wrapper">
+            <div class="left-panel">
+              <div class="inline-flex items-center px-3 py-1 rounded-full border border-green-500 bg-green-900 bg-opacity-20 mb-6 self-start">
+                <i class="fas fa-star text-green-400 mr-2 text-xs"></i>
+                <p class="text-green-400 text-xs font-bold tracking-widest uppercase m-0">Ventajas Competitivas</p>
+              </div>
+
+              <h1 class="title-font text-5xl font-extrabold text-white leading-tight mb-4">
+                ¿Por qué elegir <span class="text-green-400">esta consultoría</span>?
+              </h1>
+
+              <div class="decorative-line"></div>
+
+              <p class="text-slate-300 text-lg leading-relaxed mb-0">
+                A diferencia de cursos genéricos de marketing, esta es una experiencia diseñada específicamente para el sector de la salud mental.
+              </p>
+
+              <div class="visual-badge">
+                <i class="fas fa-quote-left quote-icon"></i>
+                <p class="text-slate-400 italic text-sm m-0 leading-relaxed">
+                  "Entendemos que un paciente no es un cliente tradicional, y que la salud mental requiere un lenguaje único, cuidadoso y ético."
+                </p>
+                <div class="flex items-center mt-4">
+                  <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white mr-3">SC</div>
+                  <p class="text-white text-xs font-bold m-0">Santiago Cano Molina</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="right-panel">
+              <div class="checklist-container">
+                <div class="check-item">
+                  <div class="icon-box icon-ethics"><i class="fas fa-hand-holding-heart"></i></div>
+                  <div class="item-content">
+                    <p class="item-title m-0">Ética y Enfoque Psicológico</p>
+                    <p class="item-desc">Marketing que respeta al paciente. Evitamos sensacionalismos y priorizamos el bienestar y la información veraz.</p>
+                  </div>
+                  <i class="fas fa-check-circle check-mark"></i>
+                </div>
+
+                <div class="check-item">
+                  <div class="icon-box icon-custom"><i class="fas fa-fingerprint"></i></div>
+                  <div class="item-content">
+                    <p class="item-title m-0">Prompts 100% Personalizados</p>
+                    <p class="item-desc">Nada de plantillas genéricas. Configuramos la IA para que hable con TU voz y sobre TUS especialidades.</p>
+                  </div>
+                  <i class="fas fa-check-circle check-mark"></i>
+                </div>
+
+                <div class="check-item">
+                  <div class="icon-box icon-tools"><i class="fas fa-laptop-medical"></i></div>
+                  <div class="item-content">
+                    <p class="item-title m-0">Herramientas Accesibles</p>
+                    <p class="item-desc">Seleccionamos software fácil de usar, gratuito o de bajo costo, para que no dependas de agencias costosas.</p>
+                  </div>
+                  <i class="fas fa-check-circle check-mark"></i>
+                </div>
+
+                <div class="check-item">
+                  <div class="icon-box icon-speed"><i class="fas fa-bolt"></i></div>
+                  <div class="item-content">
+                    <p class="item-title m-0">Aplicabilidad Inmediata</p>
+                    <p class="item-desc">Al terminar las 2 horas, tendrás material listo para publicar al día siguiente. Teoría mínima, práctica máxima.</p>
+                  </div>
+                  <i class="fas fa-check-circle check-mark"></i>
+                </div>
+
+                <div class="check-item">
+                  <div class="icon-box icon-privacy"><i class="fas fa-user-lock"></i></div>
+                  <div class="item-content">
+                    <p class="item-title m-0">Confidencialidad y Trato Profesional</p>
+                    <p class="item-desc">Garantía total de privacidad sobre tus estrategias y datos internos del consultorio.</p>
+                  </div>
+                  <i class="fas fa-check-circle check-mark"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 13 -->
+      <div class="slide" id="slide-13">
+        <div class="slide-container">
+          <div class="bg-mesh"></div>
+          <div class="orb-1"></div>
+          <div class="orb-2"></div>
+          <div class="geo-shape circle-lg"></div>
+          <div class="geo-shape circle-md"></div>
+
+          <div class="content-wrapper">
+            <div class="cta-card">
+              <div class="card-top-accent"></div>
+
+              <div class="bonus-tag">
+                <i class="fas fa-gift text-green-400 mr-2"></i>
+                <p class="bonus-text">Diagnóstico Previo de 10 min GRATIS</p>
+              </div>
+
+              <h1 class="headline title-font">
+                ¿Listo para transformar <br/>
+                tu <span class="text-blue-500">Marketing Digital</span>?
+              </h1>
+
+              <p class="subheadline">
+                Agenda tu sesión de consultoría hoy y empieza a crear contenido profesional, ético y efectivo con el poder de la Inteligencia Artificial.
+              </p>
+
+              <div class="action-buttons">
+                <div class="btn-secondary">
+                  <i class="fab fa-whatsapp mr-3"></i>
+                  <span>Consultar Disponibilidad</span>
+                </div>
+              </div>
+
+              <div class="footer-info">
+                <div class="info-item"><i class="fas fa-users info-icon"></i><p class="m-0">Modalidad Presencial (Medellín)</p></div>
+                <div class="info-item"><i class="fas fa-video info-icon"></i><p class="m-0">Modalidad Virtual (Zoom/Meet)</p></div>
+                <div class="info-item"><i class="fas fa-lock info-icon"></i><p class="m-0">Reserva Segura</p></div>
+              </div>
+
+              <div class="qr-placeholder">
+                <i class="fas fa-qrcode text-9xl text-slate-900"></i>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SLIDE 14 -->
+      <div class="slide" id="slide-14">
+        <div class="slide-container">
+          <div class="bg-circle-1"></div>
+          <div class="bg-circle-2"></div>
+          <div class="pattern-grid"></div>
+
+          <div class="content-wrapper">
+            <div class="profile-container">
+              <div class="avatar-placeholder">
+                <i class="fas fa-user-tie text-5xl text-blue-400"></i>
+              </div>
+              <h1 class="name-text title-font">Santiago Cano Molina</h1>
+              <p class="role-text m-0">Ingeniero Mecatrónico | Consultor en Ingeniería y Tecnología Aplicada</p>
+              <div class="separator"></div>
+              <p class="text-slate-300 text-lg max-w-2xl mx-auto mb-0 leading-relaxed">
+                Listo para potenciar tu consultorio con tecnología responsable.
+              </p>
+            </div>
+
+            <div class="contact-grid">
+              <div class="contact-card">
+                <div class="icon-circle"><i class="fas fa-envelope"></i></div>
+                <div class="contact-info text-left">
+                  <p class="contact-label">Correo Electrónico</p>
+                  <p class="contact-value">scanomolina11@gmail.com</p>
+                </div>
+              </div>
+
+              <div class="contact-card">
+                <div class="icon-circle"><i class="fas fa-phone"></i></div>
+                <div class="contact-info text-left">
+                  <p class="contact-label">Teléfono / WhatsApp</p>
+                  <p class="contact-value">+57 3002654474</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="ethical-note">
+              <i class="fas fa-shield-halved text-emerald-400 mr-3 text-lg"></i>
+              <p class="ethical-text">
+                <strong>Garantía de Confidencialidad:</strong> Trabajo 100% alineado con los principios éticos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="nav-controls" role="navigation" aria-label="Controles de la presentación">
+    <button class="nav-btn" id="prevBtn" title="Anterior (←)">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <div class="slide-counter">
+      <span id="currentSlide">1</span> / <span id="totalSlides">14</span>
+    </div>
+    <button class="nav-btn" id="nextBtn" title="Siguiente (→)">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <script>
+    // ======= Slides =======
+    const presentationContainer = document.getElementById('presentationContainer');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const totalSlides = slides.length;
+
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const currentSlideEl = document.getElementById('currentSlide');
+    const totalSlidesEl = document.getElementById('totalSlides');
+    const progressBar = document.getElementById('progressBar');
+
+    totalSlidesEl.textContent = totalSlides;
+
+    let index = 0;
+
+    function fitToScreen() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      // Escala para que 1280x720 quepa (con un pequeño margen)
+      const scale = Math.min(w / 1280, h / 720) * 0.98;
+      presentationContainer.style.transform = `scale(${scale})`;
+    }
+
+    function showSlide(i) {
+      if (i < 0) i = 0;
+      if (i >= totalSlides) i = totalSlides - 1;
+
+      slides.forEach((s, k) => s.classList.toggle('active', k === i));
+      index = i;
+
+      currentSlideEl.textContent = (index + 1);
+      progressBar.style.width = (((index + 1) / totalSlides) * 100) + '%';
+
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === totalSlides - 1;
+    }
+
+    function nextSlide() { if (index < totalSlides - 1) showSlide(index + 1); }
+    function prevSlide() { if (index > 0) showSlide(index - 1); }
+
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    // Teclado
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+      if (e.key === 'Home') { e.preventDefault(); showSlide(0); }
+      if (e.key === 'End') { e.preventDefault(); showSlide(totalSlides - 1); }
+    });
+
+    // Click en slide: derecha avanza / izquierda retrocede
+    presentationContainer.addEventListener('click', (e) => {
+      // Ignorar clicks en controles (por si se solapan)
+      if (e.target.closest('.nav-controls') || e.target.closest('.fullscreen-btn')) return;
+
+      const rect = presentationContainer.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      if (x > rect.width / 2) nextSlide();
+      else prevSlide();
+    });
+
+    // Swipe móvil
+    let touchStartX = null;
+    window.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+    window.addEventListener('touchend', (e) => {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) {
+        if (dx > 0) prevSlide();
+        else nextSlide();
+      }
+      touchStartX = null;
+    }, { passive: true });
+
+    // Fullscreen
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    fullscreenBtn.addEventListener('click', async () => {
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+          fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+        } else {
+          await document.exitFullscreen();
+          fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+        }
+        setTimeout(fitToScreen, 50);
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      fullscreenBtn.innerHTML = document.fullscreenElement
+        ? '<i class="fas fa-compress"></i>'
+        : '<i class="fas fa-expand"></i>';
+      setTimeout(fitToScreen, 50);
+    });
+
+    window.addEventListener('resize', fitToScreen);
+
+    // Init
+    fitToScreen();
+    showSlide(0);
+  </script>
+</body>
+</html>
