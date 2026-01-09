@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <!-- Viewport robusto para iOS/Android + notch -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Cotización | Consultoría IA + Marketing</title>
 
   <!-- Tailwind (CDN) -->
@@ -20,44 +21,51 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root{
+      /* fallback */
+      --app-height: 100vh;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+    }
+
     html, body {
       width: 100%;
       height: 100%;
       background: #0f172a;
       font-family: 'Open Sans', sans-serif;
       overflow: hidden;
-    }
-    
-    /* En móviles, usa alto real del dispositivo */
-    @supports (height: 100dvh) {
-      .stage { height: 100dvh; }
+      -webkit-text-size-adjust: 100%;
+      touch-action: manipulation;
     }
 
-
-    /* Escenario centrado */
+    /* Escenario centrado (usa altura real calculada por JS para móviles) */
     .stage{
       width: 100vw;
-      min-height: 100dvh;
+      height: var(--app-height);
       display: grid;
       place-items: center;
       position: relative;
-      padding: 12px;
+      padding: calc(12px + var(--safe-top)) calc(12px + var(--safe-right)) calc(70px + var(--safe-bottom)) calc(12px + var(--safe-left));
     }
 
-
-    /* Contenedor 1280x720 escalado a pantalla */
+    /* Contenedor BASE 1280x720. Se escala por JS.
+       (Esto evita el “doble escalado” que suele romper en móvil y hace que no se vea nada) */
     .presentation-container{
       position: relative;
-      width: min(100vw, calc(100dvh * (16 / 9)));
+      width: 1280px;
+      height: 720px;
       aspect-ratio: 16 / 9;
-      height: auto;
-    
+
+      transform-origin: center center;
+      will-change: transform;
+
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
       border-radius: 14px;
       overflow: hidden;
       background: #0f172a;
     }
-
 
     .slide {
       width: 100%;
@@ -74,9 +82,6 @@
       visibility: visible;
       z-index: 10;
     }
-
-    /* Barra de controles */
-
 
     .nav-btn {
       background: rgba(59, 130, 246, 0.16);
@@ -102,6 +107,7 @@
       font-size: 0.85rem;
       letter-spacing: 0.10em;
       padding: 0 10px;
+      user-select: none;
     }
 
     /* Barra de progreso */
@@ -113,28 +119,29 @@
       width: 0%;
       background: #3b82f6;
       transition: width 0.45s ease;
-      z-index: 1000;
+      z-index: 2000;
     }
 
-    /* Hint teclado */
+    /* Hint teclado (se oculta en móvil) */
     .keyboard-hint {
       position: fixed;
-      top: 18px;
-      right: 18px;
+      top: calc(18px + var(--safe-top));
+      right: calc(18px + var(--safe-right));
       background: rgba(15, 23, 42, 0.80);
       color: #94a3b8;
       padding: 8px 14px;
       border-radius: 10px;
       font-size: 0.8rem;
-      z-index: 1000;
+      z-index: 2000;
       border: 1px solid rgba(255, 255, 255, 0.10);
+      user-select: none;
     }
 
     /* Fullscreen */
     .fullscreen-btn {
       position: fixed;
-      top: 18px;
-      left: 18px;
+      top: calc(18px + var(--safe-top));
+      left: calc(18px + var(--safe-left));
       background: rgba(15, 23, 42, 0.80);
       border: 1px solid rgba(255, 255, 255, 0.10);
       color: #93c5fd;
@@ -145,9 +152,28 @@
       place-items: center;
       cursor: pointer;
       transition: background 0.12s ease;
-      z-index: 1000;
+      z-index: 2000;
     }
     .fullscreen-btn:hover { background: rgba(59, 130, 246, 0.25); }
+
+    /* Controles inferiores (ANTES no tenían estilos, en móvil suelen quedar “perdidos”) */
+    .nav-controls{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: calc(14px + var(--safe-bottom));
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.70);
+      border: 1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
 
     /* Base para todos los slide-container dentro de cada slide */
     .slide .slide-container {
@@ -160,6 +186,77 @@
     }
 
     .title-font { font-family: 'Montserrat', sans-serif; }
+
+    /* Gate de selección (opcional, aparece si el sistema detecta raro o si el usuario quiere elegir) */
+    .mode-gate{
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      background: rgba(2, 6, 23, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .mode-gate.show{ display: flex; }
+    .mode-card{
+      width: min(680px, 100%);
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      padding: 22px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      color: #e2e8f0;
+    }
+    .mode-card h2{
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+    }
+    .mode-card p{
+      color: #94a3b8;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+    .mode-actions{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .mode-btn{
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(30,41,59,0.55);
+      cursor: pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      color:#e2e8f0;
+    }
+    .mode-btn:hover{ transform: translateY(-1px); background: rgba(30,41,59,0.8); border-color: rgba(59,130,246,0.35); }
+    .mode-btn.primary{ background: rgba(37,99,235,0.35); border-color: rgba(37,99,235,0.5); }
+    .mode-btn.primary:hover{ background: rgba(37,99,235,0.55); }
+    .mode-small{
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: #64748b;
+    }
+
+    /* Ajustes móviles */
+    @media (max-width: 900px), (pointer: coarse){
+      .keyboard-hint{ display:none; }
+      .nav-btn{ width: 46px; height: 46px; }
+      .nav-controls{ padding: 10px 12px; gap: 10px; }
+    }
   </style>
 
   <!-- =========================
@@ -419,7 +516,6 @@
        SLIDE 6 STYLES (scoped)
   ========================== -->
   <style>
-    /* Reutiliza estructura tipo slide 5 (clases iguales), pero con fondos distintos */
     #slide-6 .slide-container { display:flex; flex-direction:column; background:#0f172a; }
     #slide-6 .bg-shape-1 {
       position:absolute; top:-100px; right:-100px; width:600px; height:600px;
@@ -1195,17 +1291,14 @@
       border-radius:50px;
     }
     #slide-14 .ethical-text { color:#a7f3d0; font-size:0.9rem; margin:0; }
-    /* =========================
-   FORZAR TEXTO CLARO GLOBAL
-   ========================= */
-body,
-.slide,
-.slide * {
-  color: #f8fafc; /* Blanco suave (no quema la vista) */
-}
 
+    /* Forzar texto claro global */
+    body,
+    .slide,
+    .slide * {
+      color: #f8fafc;
+    }
   </style>
-
 </head>
 
 <body>
@@ -1220,6 +1313,30 @@ body,
   <!-- Hint teclado -->
   <div class="keyboard-hint">
     <i class="fas fa-keyboard mr-2"></i> Usa ← → o Espacio
+  </div>
+
+  <!-- Gate selección equipo -->
+  <div class="mode-gate" id="modeGate" aria-hidden="true">
+    <div class="mode-card">
+      <h2>Selecciona cómo lo estás viendo</h2>
+      <p>
+        En algunos celulares, el navegador cambia la altura visible y puede ocultar el contenido.
+        Elige el modo correcto y la presentación se ajustará automáticamente.
+      </p>
+      <div class="mode-actions">
+        <button class="mode-btn primary" id="chooseMobile">
+          <i class="fas fa-mobile-screen-button"></i>
+          Móvil / Tablet
+        </button>
+        <button class="mode-btn" id="chooseDesktop">
+          <i class="fas fa-desktop"></i>
+          PC / Portátil
+        </button>
+      </div>
+      <div class="mode-small">
+        Consejo: en móvil, si quieres pantalla completa, toca el botón de expandir arriba a la izquierda.
+      </div>
+    </div>
   </div>
 
   <div class="stage">
@@ -2325,23 +2442,45 @@ body,
     const totalSlidesEl = document.getElementById('totalSlides');
     const progressBar = document.getElementById('progressBar');
 
+    // Gate
+    const modeGate = document.getElementById('modeGate');
+    const chooseMobile = document.getElementById('chooseMobile');
+    const chooseDesktop = document.getElementById('chooseDesktop');
+
     totalSlidesEl.textContent = totalSlides;
 
     let index = 0;
+    let mode = null; // 'mobile' | 'desktop'
 
-    function fitToScreen() {
+    function setAppHeightVar(){
+      // Altura real útil (evita problemas con barras del navegador en iOS/Android)
+      const vv = window.visualViewport;
+      const h = vv ? vv.height : window.innerHeight;
+      document.documentElement.style.setProperty('--app-height', `${h}px`);
+    }
+
+    function isLikelyMobile(){
+      // Detección práctica: pantalla pequeña o puntero táctil
+      return window.matchMedia('(max-width: 900px)').matches || window.matchMedia('(pointer: coarse)').matches;
+    }
+
+    function fitToScreen(){
+      // Escala SIEMPRE desde base 1280x720 para que funcione igual en PC y móvil
       const vv = window.visualViewport;
       const w = vv ? vv.width : window.innerWidth;
       const h = vv ? vv.height : window.innerHeight;
-    
-      // margen para que no choque con barras del navegador / controles
-      const safeH = h - 20;
-    
-      const scale = Math.min(w / 1280, safeH / 720) * 0.98;
-    
+
+      // Reservas para controles + margen
+      const safeH = h - 16;
+      const safeW = w - 16;
+
+      // Si estás en móvil, normalmente conviene un pelín más grande
+      const boost = (mode === 'mobile') ? 1.00 : 0.98;
+
+      const scale = Math.min(safeW / 1280, safeH / 720) * boost;
+
       presentationContainer.style.transform = `scale(${scale})`;
     }
-
 
     function showSlide(i) {
       if (i < 0) i = 0;
@@ -2363,7 +2502,7 @@ body,
     prevBtn.addEventListener('click', prevSlide);
     nextBtn.addEventListener('click', nextSlide);
 
-    // Teclado
+    // Teclado (PC)
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
       if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
@@ -2373,9 +2512,7 @@ body,
 
     // Click en slide: derecha avanza / izquierda retrocede
     presentationContainer.addEventListener('click', (e) => {
-      // Ignorar clicks en controles (por si se solapan)
-      if (e.target.closest('.nav-controls') || e.target.closest('.fullscreen-btn')) return;
-
+      if (e.target.closest('.nav-controls') || e.target.closest('.fullscreen-btn') || e.target.closest('#modeGate')) return;
       const rect = presentationContainer.getBoundingClientRect();
       const x = e.clientX - rect.left;
       if (x > rect.width / 2) nextSlide();
@@ -2388,7 +2525,7 @@ body,
     window.addEventListener('touchend', (e) => {
       if (touchStartX === null) return;
       const dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 50) {
+      if (Math.abs(dx) > 45) {
         if (dx > 0) prevSlide();
         else nextSlide();
       }
@@ -2406,7 +2543,7 @@ body,
           await document.exitFullscreen();
           fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
         }
-        setTimeout(fitToScreen, 50);
+        setTimeout(() => { setAppHeightVar(); fitToScreen(); }, 80);
       } catch (err) {
         console.error(err);
       }
@@ -2416,22 +2553,74 @@ body,
       fullscreenBtn.innerHTML = document.fullscreenElement
         ? '<i class="fas fa-compress"></i>'
         : '<i class="fas fa-expand"></i>';
-      setTimeout(fitToScreen, 50);
+      setTimeout(() => { setAppHeightVar(); fitToScreen(); }, 80);
     });
 
-    window.addEventListener('resize', fitToScreen);
+    function applyMode(newMode){
+      mode = newMode;
+      localStorage.setItem('slides_mode', mode);
 
+      // Ajustes pequeños por modo
+      if (mode === 'mobile') {
+        // En móvil suele ser mejor priorizar tamaño visible y ocultar hint (ya por CSS)
+      }
 
+      // Cierra gate
+      modeGate.classList.remove('show');
+      modeGate.setAttribute('aria-hidden', 'true');
+
+      // Recalcular
+      setAppHeightVar();
+      fitToScreen();
+    }
+
+    function maybeShowGate(){
+      // Si el usuario ya eligió modo antes, respeta eso.
+      const saved = localStorage.getItem('slides_mode');
+      if (saved === 'mobile' || saved === 'desktop') {
+        applyMode(saved);
+        return;
+      }
+
+      // Si es móvil, entra directo a modo móvil (sin interrumpir) y deja gate opcional
+      if (isLikelyMobile()) {
+        applyMode('mobile');
+        return;
+      }
+
+      // En desktop entra directo a desktop
+      applyMode('desktop');
+    }
+
+    // Botones del gate (por si quieres forzar en algún dispositivo)
+    chooseMobile.addEventListener('click', () => applyMode('mobile'));
+    chooseDesktop.addEventListener('click', () => applyMode('desktop'));
+
+    // Permite abrir el gate manteniendo presionado 1s en la esquina superior derecha (modo soporte)
+    let gateTimer = null;
+    window.addEventListener('touchstart', (e) => {
+      const t = e.touches && e.touches[0];
+      if (!t) return;
+      if (t.clientX > (window.innerWidth - 60) && t.clientY < 80) {
+        gateTimer = setTimeout(() => {
+          modeGate.classList.add('show');
+          modeGate.setAttribute('aria-hidden', 'false');
+        }, 900);
+      }
+    }, { passive: true });
+    window.addEventListener('touchend', () => { if (gateTimer) clearTimeout(gateTimer); gateTimer = null; }, { passive: true });
+
+    // Resize / viewport changes
+    window.addEventListener('resize', () => { setAppHeightVar(); fitToScreen(); });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', () => { setAppHeightVar(); fitToScreen(); });
+      window.visualViewport.addEventListener('scroll', () => { setAppHeightVar(); fitToScreen(); });
+    }
 
     // Init
-    fitToScreen();
+    setAppHeightVar();
+    maybeShowGate();
     showSlide(0);
   </script>
 </body>
 </html>
-
-
-
-
-
-
