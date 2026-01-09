@@ -27,6 +27,12 @@
       font-family: 'Open Sans', sans-serif;
       overflow: hidden;
     }
+    
+    /* En móviles, usa alto real del dispositivo */
+    @supports (height: 100dvh) {
+      .stage { height: 100dvh; }
+    }
+
 
     /* Escenario centrado */
     .stage {
@@ -2320,13 +2326,18 @@ body,
     let index = 0;
 
     function fitToScreen() {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-
-      // Escala para que 1280x720 quepa (con un pequeño margen)
-      const scale = Math.min(w / 1280, h / 720) * 0.98;
+      const vv = window.visualViewport;
+      const w = vv ? vv.width : window.innerWidth;
+      const h = vv ? vv.height : window.innerHeight;
+    
+      // margen para que no choque con barras del navegador / controles
+      const safeH = h - 20;
+    
+      const scale = Math.min(w / 1280, safeH / 720) * 0.98;
+    
       presentationContainer.style.transform = `scale(${scale})`;
     }
+
 
     function showSlide(i) {
       if (i < 0) i = 0;
@@ -2405,6 +2416,11 @@ body,
     });
 
     window.addEventListener('resize', fitToScreen);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', fitToScreen);
+      window.visualViewport.addEventListener('scroll', fitToScreen);
+    }
+
 
     // Init
     fitToScreen();
@@ -2412,6 +2428,7 @@ body,
   </script>
 </body>
 </html>
+
 
 
 
